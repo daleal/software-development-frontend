@@ -12,18 +12,6 @@ const Home: NextPage = () => {
     <div className="relative bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-        
-          <Head>
-            <svg>
-              <defs>
-                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#091e79" stopOpacity="1" />
-                  <stop offset="100%" stopColor="#ffde00" stopOpacity="1" />
-                </linearGradient>
-              </defs>
-              <rect width="200" height="30" x="30" y="30" fill="url(#grad1)" />
-            </svg>
-          </Head>
 
           <Popover>
             <div className="relative pt-6 px-4 sm:px-6 lg:px-8">
@@ -68,9 +56,6 @@ const Home: NextPage = () => {
               >
                 <div className="rounded-lg shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden">
                   <div className="px-5 pt-4 flex items-center justify-between">
-                    <div>
-                      <Image src="/logo.png" alt="Vercel Logo" width={250} height={70} />
-                    </div>
                     <div className="-mr-2">
                       <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-800">
                         <span className="sr-only">Close main menu</span>
