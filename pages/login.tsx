@@ -17,8 +17,10 @@ const Login: NextPage = () => {
 
   const login = async (username: string, password: string) => {
     try {
-      await signIn('credentials', { username, password })
-      router.push('/')
+      const response = await signIn('credentials', { redirect: false, username, password })
+      if ((response || { ok: false }).ok) {
+        router.push('/')
+      }
     } catch (error) {
       console.log(error)
     }
