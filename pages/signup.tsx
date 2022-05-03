@@ -42,7 +42,8 @@ const Signup: NextPage = () => {
     }
   }
 
-  return (
+  return <>
+    <div className="mt-8 w-full text-center text-4xl font-semibold">Sign Up</div>
     <UserForm
       usernameError={usernameError}
       passwordError={passwordError}
@@ -50,7 +51,7 @@ const Signup: NextPage = () => {
       onSubmit={signUp}
       onBlur={onBlur}
     />
-  )
+  </>
 }
 
 export default Signup
