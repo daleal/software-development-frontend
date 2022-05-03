@@ -4,6 +4,7 @@ import type { ChangeEvent, Dispatch, FormEvent, SetStateAction } from 'react'
 interface Props {
   usernameError?: string
   passwordError?: string
+  loading: boolean
   onSubmit: (username: string, password: string) => void
   onBlur?: (field: 'username' | 'password') => void
 }
@@ -49,7 +50,9 @@ const UserForm = (props: Props) => {
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    props.onSubmit(username, password)
+    if (!props.loading) {
+      props.onSubmit(username, password)
+    }
   }
 
   return (
@@ -69,6 +72,7 @@ const UserForm = (props: Props) => {
               focus:ring-1 h-12 ${usernameClasses}
             `}
             placeholder="username"
+            disabled={props.loading}
             value={username}
             onChange={bindFormEventData(setUsername)}
             onBlur={() => props.onBlur?.('username')}
@@ -94,6 +98,7 @@ const UserForm = (props: Props) => {
             block w-full px-3 py-2 border rounded-md text-sm shadow-sm focus:outline-none
             focus:ring-1 h-12 ${passwordClasses}
           `}
+            disabled={props.loading}
             value={password}
             onChange={bindFormEventData(setPassword)}
             onBlur={() => props.onBlur?.('password')}
@@ -112,6 +117,7 @@ const UserForm = (props: Props) => {
             focus:outline-none focus:ring-blue-300 font-medium rounded-lg
             text-sm w-full sm:w-auto px-5 py-2.5 text-center
           "
+          disabled={props.loading}
         >
           Submit
         </button>
