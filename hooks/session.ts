@@ -32,5 +32,5 @@ export const useSession = () => {
     setRefreshToken(response.refresh)
   }
 
-  return { login, getToken }
+  return { login, getToken, accessToken, refreshToken }
 }

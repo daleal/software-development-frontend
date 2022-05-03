@@ -1,11 +1,9 @@
-import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
-
 import { setupAPIAuthInterceptors } from '@/api/setup'
-
-setupAPIAuthInterceptors()
+import '@/styles/globals.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
+  setupAPIAuthInterceptors()
   return <Component {...pageProps} />
 }
 
