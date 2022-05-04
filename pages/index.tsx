@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
-
 
 // Reference: https://tailwindui.com/components/marketing/sections/heroes
 const Home: NextPage = () => {
@@ -29,12 +29,12 @@ const Home: NextPage = () => {
                   </div>
                 </div>
                 <div className="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
-                  <a href="/login" className="font-medium text-blue-800 hover:text-blue-800">
-                    Log in
-                  </a>
-                  <a href="/signup" className="font-medium text-blue-800 hover:text-blue-800">
-                    Sign up
-                  </a>
+                  <Link href="/login">
+                    <a className="font-medium text-blue-800 hover:text-blue-800">Log in</a>
+                  </Link>
+                  <Link href="/signup">
+                    <a className="font-medium text-blue-800 hover:text-blue-800">Sign up</a>
+                  </Link>
                 </div>
               </nav>
             </div>
@@ -61,18 +61,16 @@ const Home: NextPage = () => {
                       </Popover.Button>
                     </div>
                   </div>
-                  <a
-                    href="/login"
-                    className="block w-full px-5 py-3 text-center font-medium text-blue-800 bg-gray-50 hover:bg-gray-100"
-                  >
-                    Log in
-                  </a>
-                  <a
-                    href="/signup"
-                    className="block w-full px-5 py-3 text-center font-medium text-blue-800 bg-gray-50 hover:bg-gray-100"
-                  >
-                    Sign up
-                  </a>
+                  <Link href="/login">
+                    <a className="block w-full px-5 py-3 text-center font-medium text-blue-800 bg-gray-50 hover:bg-gray-100">
+                      Log in
+                    </a>
+                  </Link>
+                  <Link href="/signup">
+                    <a className="block w-full px-5 py-3 text-center font-medium text-blue-800 bg-gray-50 hover:bg-gray-100">
+                      Sign up
+                    </a>
+                  </Link>
                 </div>
               </Popover.Panel>
             </Transition>
