@@ -4,7 +4,8 @@ on:
   pull_request:
     paths:
       - ".github/workflows/linters.yml"
-      - "src/**"
+      - "**/*.ts"
+      - "**/*.tsx"
       - ".eslintrc.json"
       - "package.json"
       - "package-lock.json"
