@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
 import Image from 'next/image'
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
@@ -7,11 +6,6 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline'
 
 // Reference: https://tailwindui.com/components/marketing/sections/heroes
 const Home: NextPage = () => {
-  const { accessToken } = useSession()
-
-  const showToken = () => {
-    console.log(accessToken)
-  }
   return (
     <div className="relative bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto">

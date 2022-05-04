@@ -3,7 +3,7 @@ import { useState } from 'react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import * as api from '@/api'
-import UserForm from '@/components/userForm'
+import UserForm from '@/components/UserForm'
 import type { SignInError } from '@/types/api/errors'
 
 const Signup: NextPage = () => {
