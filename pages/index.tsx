@@ -1,12 +1,15 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import { useSession, signIn } from 'next-auth/react'
+import { useSession } from '@/hooks/session'
 import styles from '@/styles/Home.module.css'
 
 const Home: NextPage = () => {
-  const { status } = useSession()
-  console.log(status)
+  const { accessToken } = useSession()
+
+  const showToken = () => {
+    console.log(accessToken)
+  }
   return (
     <div className={styles.container}>
       <Head>
@@ -15,7 +18,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <button onClick={() => signIn('credentials', { username: 'daleal', password: 'chacala' })}>Sign in</button>
+      <button onClick={showToken}>Sign in</button>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
