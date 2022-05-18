@@ -4,7 +4,8 @@ on:
   pull_request:
     paths:
       - ".github/workflows/build.yml"
-      - "src/**"
+      - "**/*.ts"
+      - "**/*.tsx"
       - "package.json"
       - "package-lock.json"
       - "tsconfig.json"
