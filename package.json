@@ -11,9 +11,11 @@
   "dependencies": {
     "@headlessui/react": "^1.6.0",
     "@heroicons/react": "^1.0.6",
+    "@reduxjs/toolkit": "^1.8.2",
     "next": "12.1.5",
     "react": "18.0.0",
-    "react-dom": "18.0.0"
+    "react-dom": "18.0.0",
+    "react-redux": "^8.0.2"
   },
   "devDependencies": {
     "@types/humps": "^2.0.1",
