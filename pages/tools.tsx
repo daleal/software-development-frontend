@@ -1,5 +1,6 @@
-import { useGetToolListingsQuery } from "./api/toolListing";
+import { useGetToolListingsQuery } from './api/toolListing'
 import type { NextPage } from 'next'
+import { ToolListing } from '@/types/entities/toolListing'
 
 const Tools: NextPage = () => {
   
@@ -15,8 +16,8 @@ const Tools: NextPage = () => {
         <>
           <h3>
             {
-              data.map(({ id: number}) => 
-                <>id</>
+              data.map((tool: ToolListing) => 
+                <>{tool.id}</>
               )
             }
           </h3>
