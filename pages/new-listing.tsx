@@ -1,29 +1,47 @@
-import type { NextPage } from "next";
-import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
-import { FileRejection, useDropzone } from "react-dropzone";
-import { useCallback } from "react";
+import type { FormEvent } from 'react'
+import type { NextPage } from 'next'
+import Image from 'next/image'
+import { useEffect, useMemo, useState } from 'react'
+import { FileRejection, useDropzone } from 'react-dropzone'
+import { createToolListing } from '@/store/modules/toolListings'
+import { useDispatch } from '@/store'
+import { Nullable } from '@/types/common'
 
 // Reference: https://tailwindui.com/components/marketing/sections/heroes
 const NewListing: NextPage = () => {
-  const [selectedImage, setSelectedImage] = useState<File>();
-  const [rejectionError, setRejectionError] = useState<FileRejection>();
+  const dispatch = useDispatch()
+  const [selectedImage, setSelectedImage] = useState<Blob>()
+  const [selectedImageBase64, setSelectedImageBase64] = useState<Nullable<string>>(null)
+  const [rejectionError, setRejectionError] = useState<FileRejection>()
 
-  const onDrop = (acceptedFiles: File[], fileRejections: FileRejection[]) => {
-    setSelectedImage(acceptedFiles[0]);
-    setRejectionError(fileRejections[0]);
-  };
+  const onDrop = (acceptedFiles: Blob[], fileRejections: FileRejection[]) => {
+    setSelectedImage(acceptedFiles[0])
+    setRejectionError(fileRejections[0])
+  }
   const previewImage = useMemo(() => {
     if (selectedImage) {
-      return URL.createObjectURL(selectedImage);
+      return URL.createObjectURL(selectedImage)
     }
-    return "";
-  }, [selectedImage]);
+    return ''
+  }, [selectedImage])
+
+  useEffect(() => {
+    const reader = new FileReader()
+
+    reader.onload = () => {
+      const result = reader.result as string
+      setSelectedImageBase64(result)
+    }
+
+    if (selectedImage) {
+      reader.readAsDataURL(selectedImage)
+    }
+  }, [selectedImage])
 
   useEffect(() => {
     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
-    return () => URL.revokeObjectURL(previewImage);
-  }, [previewImage]);
+    return () => URL.revokeObjectURL(previewImage)
+  }, [previewImage])
   const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } =
     useDropzone({
       onDrop,
@@ -31,32 +49,47 @@ const NewListing: NextPage = () => {
       maxFiles: 1,
       maxSize: 1024 * 1024 * 10,
       accept: {
-        "image/png": [],
-        "image/jpeg": [],
+        'image/png': [],
+        'image/jpeg': [],
       },
-    });
+    })
   const dropzoneClassName = useMemo(() => {
     const base =
-      "flex justify-center max-w-lg px-6 pt-5 pb-6 border-2 border-dashed rounded-md";
+      'flex justify-center max-w-lg px-6 pt-5 pb-6 border-2 border-dashed rounded-md'
     if (isFocused) {
-      return `${base} border-gray-500`;
+      return `${base} border-gray-500`
     }
     if (isDragReject) {
-      return `${base} border-red-500`;
+      return `${base} border-red-500`
     }
     if (isDragAccept) {
-      return `${base} border-indigo-500`;
+      return `${base} border-indigo-500`
     }
 
-    return base;
-  }, [isDragAccept, isDragReject, isFocused]);
+    return base
+  }, [isDragAccept, isDragReject, isFocused])
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const [price, setPrice] = useState(0)
+
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (selectedImageBase64) {
+      const created = await dispatch(createToolListing({
+        name: title,
+        description,
+        price,
+        image: selectedImageBase64,
+      })).unwrap()
+    }
+  }
 
   return (
-    <form className="px-10 mb-5 space-y-8 divide-y divide-gray-200 md:px-60">
+    <form
+      onSubmit={submit}
+      className="px-10 mb-5 space-y-8 divide-y divide-gray-200 md:px-60"
+    >
       <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
         <div>
           <div>
@@ -145,7 +178,7 @@ const NewListing: NextPage = () => {
                           width="200"
                           height="200"
                           onLoad={() => {
-                            URL.revokeObjectURL(previewImage);
+                            URL.revokeObjectURL(previewImage)
                           }}
                         />
                       </div>
@@ -207,7 +240,7 @@ const NewListing: NextPage = () => {
         </div>
       </div>
     </form>
-  );
-};
+  )
+}
 
-export default NewListing;
+export default NewListing

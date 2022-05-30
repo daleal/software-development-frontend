@@ -15,7 +15,13 @@ export const create = async (
   name: string,
   description: string,
   price: number,
+  image: string,
 ): Promise<ToolListing> => {
-  const response = await client.post('/api/tool-listings/', { name, description, price })
+  const response = await client.post('/api/tool-listings/', {
+    name,
+    description,
+    price,
+    image: { created: null, file: image },
+  })
   return response.data
 }
