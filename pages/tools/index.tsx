@@ -24,10 +24,10 @@ const ListTools: NextPage = () => {
     <>loading...</>
     : 
     <div className=" m-24 bg-white shadow overflow-hidden sm:rounded-md text-center">
-      <div className="text-gray-900 font-bold text-xl mb-2 m-10">
+      <div className="text-blue-800 font-bold text-2xl mb-2 m-10">
         Herramientas
       </div>
-      <div className="grid grid-cols-3 gap-8 m-10">
+      <div className="grid grid-cols-4 gap-8 m-10">
         {toolListings.map((tool: ToolListing) =>
         <div key={tool.id} className="max-w-sm rounded overflow-hidden shadow-lg">
           <div className='relative w-full h-44'>
@@ -38,8 +38,8 @@ const ListTools: NextPage = () => {
             src={tool.image} />
           </div>
           <div className="p-5">
-            <div className="font-bold text-xl mb-2">{ tool.name }</div> 
-            <p className="text-sm text-gray-700">Precio: ${ tool.price }</p> 
+            <div className="font-bold text-xl text-blue-800">{ tool.name }</div> 
+            <p className="text-sm text-gray-500">Precio: ${ tool.price }</p> 
           </div>
         </div> 
         )}
