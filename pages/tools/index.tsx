@@ -25,7 +25,7 @@ const ListTools: NextPage = () => {
     <>loading...</>
     : 
     <div className=" m-10 bg-white shadow overflow-hidden sm:rounded-md">
-      <div className="grid grid-cols-3 gap-4 m-10">
+      <div className="grid grid-cols-3 gap-8 m-10">
         {toolListings.map((tool: ToolListing) =>
         <div key={tool.id} className="max-w-sm rounded overflow-hidden shadow-lg">
           <div className='relative w-full h-44'>
