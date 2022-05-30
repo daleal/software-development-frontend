@@ -20,15 +20,16 @@ const ListTools: NextPage = () => {
   }, [])
 
   return <div>
-    { loading? 
-    <>loading...</>
-    : 
+
     <div className=" m-24 bg-white shadow overflow-hidden sm:rounded-md text-center">
       <div className="text-blue-800 font-bold text-2xl mb-2 m-10">
         Herramientas
       </div>
       <div className="grid grid-cols-4 gap-8 m-10">
-        {toolListings.map((tool: ToolListing) =>
+        { loading? 
+          <>loading...</>
+          : 
+        toolListings.map((tool: ToolListing) =>
         <div key={tool.id} className="max-w-sm rounded overflow-hidden shadow-lg">
           <div className='relative w-full h-44'>
             <Image alt={tool.name}
@@ -43,12 +44,11 @@ const ListTools: NextPage = () => {
           </div>
         </div> 
         )}
-        <button className="m-24 bg-blue-800 hover:bg-blue-700 text-base text-white font-bold py-2 px-4 rounded">
+        <button className="m-24 text-2xl bg-blue-800 hover:bg-blue-700 text-base text-white font-bold py-2 px-4 rounded w-20 h-20">
           +
         </button>
       </div>
     </div>
-    }
       
     </div>
   
