@@ -4,7 +4,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: [process.env.NEXT_PUBLIC_S3_BUCKET || 'localhost'] 
+    domains: [process.env.S3_BUCKET || 'localhost'] 
   }
 }
 
