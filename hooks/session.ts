@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import * as api from '@/api'
 import { useLocalStorage } from '@/hooks/localStorage'
-import { Nullable } from '@/types/common'
 
 export const useSession = () => {
   const router = useRouter()
