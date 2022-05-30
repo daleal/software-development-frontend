@@ -14,10 +14,14 @@ const Tools: NextPage = () => {
       ) : data ? (
         <>
           <h3>
-            {data}
+            {
+              data.map(({ id: number}) => 
+                <>id</>
+              )
+            }
           </h3>
         </>
-      ) : null}
+      ) : <>No data</>}
     </>
   )
 };
