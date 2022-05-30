@@ -4,6 +4,7 @@ import { loadToolListings } from '@/store/modules/toolListings'
 import { useSelector, useDispatch } from '@/store'
 import type { ToolListing } from '@/types/entities/toolListing'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const ListTools: NextPage = () => {
   const dispatch = useDispatch()
@@ -30,7 +31,8 @@ const ListTools: NextPage = () => {
           <>loading...</>
           : 
         toolListings.map((tool: ToolListing) =>
-        <div key={tool.id} className="max-w-sm rounded overflow-hidden shadow-lg">
+        <Link key={tool.id} href="/tools/[id]"  as={`/tools/${tool.id}`} passHref>
+        <div  className="max-w-sm rounded overflow-hidden shadow-lg">
           <div className='relative w-full h-44'>
             <Image alt={tool.name}
             className="rounded-t-lg"
@@ -43,6 +45,7 @@ const ListTools: NextPage = () => {
             <p className="text-sm text-gray-500">Precio: ${ tool.price }</p> 
           </div>
         </div> 
+        </Link>
         )}
         <button className="m-24 text-2xl bg-blue-800 hover:bg-blue-700 text-base text-white font-bold py-2 px-4 rounded w-20 h-20">
           +
