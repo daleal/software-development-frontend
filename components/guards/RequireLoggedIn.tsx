@@ -4,7 +4,9 @@ import { useRouter } from 'next/router'
 import { useSession } from '@/hooks/session'
 
 const AUTH_PATHS = ['/login', '/signup']
-const NO_LOGIN_REQUIRED_PATHS = ['/']
+const OPEN_PATHS = ['/']
+
+const NO_LOGIN_REQUIRED_PATHS = [...AUTH_PATHS, ...OPEN_PATHS]
 
 export const RequireLoggedIn = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
@@ -14,10 +16,9 @@ export const RequireLoggedIn = ({ Component, pageProps }: AppProps) => {
 
   useEffect(() => {
     const checkUserLoggedIn = async () => {
-      if (![...AUTH_PATHS, ...NO_LOGIN_REQUIRED_PATHS].includes(router.pathname)) {
+      if (!NO_LOGIN_REQUIRED_PATHS.includes(router.pathname)) {
         await getToken()
-      }
-      if (AUTH_PATHS.includes(router.pathname)) {
+      } else if (AUTH_PATHS.includes(router.pathname)) {
         try {
           await getToken({ redirect: false })
           await router.push('/')
