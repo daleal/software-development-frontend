@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Nullable } from '@/types/common'
 
 export const useLocalStorage = (key: string): [Nullable<string>, (value: Nullable<string>) => void] => {
-  const [value, setValue] = useState<Nullable<string>>(null)
+  const initialValue = typeof window === 'undefined' ? null : localStorage.getItem(key)
+
+  const [value, setValue] = useState<Nullable<string>>(initialValue)
 
   const setStoreValue = (value: Nullable<string>) => {
     if (value === null) {
@@ -12,10 +14,6 @@ export const useLocalStorage = (key: string): [Nullable<string>, (value: Nullabl
     }
     setValue(value)
   }
-
-  useEffect(() => {
-    setValue(localStorage.getItem(key))
-  }, [key])
 
   return [value, setStoreValue]
 }

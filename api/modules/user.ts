@@ -1,7 +1,7 @@
 import client from '@/api/client'
 
-export const create = async (username: string, password: string) => {
-  const response = await client.post('/auth/users/', { username, password })
+export const create = async (username: string, phoneNumber: string, password: string) => {
+  const response = await client.post('/auth/users/', { username, phoneNumber, password })
   return response.data
 }
 

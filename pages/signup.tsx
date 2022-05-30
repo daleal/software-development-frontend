@@ -10,22 +10,26 @@ const Signup: NextPage = () => {
   const router = useRouter()
 
   const [usernameError, setUsernameError] = useState('')
+  const [phoneNumberError, setPhoneNumberError] = useState('')
   const [passwordError, setPasswordError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const signUp = async (username: string, password: string) => {
+  const signUp = async (username: string, password: string, phoneNumber?: string) => {
     try {
       setLoading(true)
-      await api.user.create(username, password)
+      await api.user.create(username, phoneNumber || '', password)
       router.push('/login')
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorData = (error.response?.data || {}) as SignInError
-        if (!!errorData.password) {
-          setPasswordError(errorData.password[0])
-        }
         if (!!errorData.username) {
           setUsernameError(errorData.username[0])
+        }
+        if (!!errorData.phoneNumber) {
+          setPhoneNumberError(errorData.phoneNumber[0])
+        }
+        if (!!errorData.password) {
+          setPasswordError(errorData.password[0])
         }
       }
     } finally {
@@ -33,9 +37,12 @@ const Signup: NextPage = () => {
     }
   }
 
-  const onBlur = (field: 'username' | 'password') => {
+  const onBlur = (field: 'username' | 'phone-number' | 'password') => {
     if (field === 'username') {
       setUsernameError('')
+    }
+    if (field === 'phone-number') {
+      setPhoneNumberError('')
     }
     if (field === 'password') {
       setPasswordError('')
@@ -46,7 +53,9 @@ const Signup: NextPage = () => {
     <div className="mt-8 w-full text-center text-4xl font-semibold">Sign Up</div>
     <UserForm
       usernameError={usernameError}
+      phoneNumberError={phoneNumberError}
       passwordError={passwordError}
+      showPhoneNumber
       loading={loading}
       onSubmit={signUp}
       onBlur={onBlur}

@@ -2,7 +2,16 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import * as api from '@/api'
 import { useLocalStorage } from '@/hooks/localStorage'
-import { Nullable } from '@/types/common'
+
+export interface GetTokenOptions {
+  redirect?: boolean
+}
+
+const getValueFromOptions = <OptionKey extends keyof GetTokenOptions>(
+  value: OptionKey,
+  options?: GetTokenOptions,
+  def?: GetTokenOptions[OptionKey],
+) => (options || {})[value] ?? def
 
 export const useSession = () => {
   const router = useRouter()
@@ -24,7 +33,8 @@ export const useSession = () => {
     setRefreshToken(null)
   }
 
-  const getToken = async () => {
+  const getToken = async (options?: GetTokenOptions) => {
+    const redirect = getValueFromOptions('redirect', options, true);
     try {
       if (accessToken) {
         try {
@@ -32,13 +42,25 @@ export const useSession = () => {
         } catch {
           await refreshAccessToken()
         }
+        if (!accessToken) {
+          throw new Error('Invalid credentials')
+        }
         return accessToken
       }
       await refreshAccessToken()
+      if (!accessToken) {
+        throw new Error('Invalid credentials')
+      }
       return accessToken
     } catch {
-      logout()
-      router.push('/login')
+      if (typeof window !== 'undefined') {
+        logout()
+        if (redirect) {
+          await router.push('/login')
+        } else {
+          throw new Error('Invalid credentials')
+        }
+      }
       return null
     }
   }
