@@ -24,20 +24,27 @@ const ListTools: NextPage = () => {
     { loading? 
     <>loading...</>
     : 
-    toolListings.map((tool: ToolListing) =>
-    <>
-      <p key={tool.id}>Tool Listing name: { tool.name }</p> 
-      <Image alt={tool.name}
-       className="w-full aspect-video"
-       width={500}
-        height={500}
-        src={tool.image} />
-     </> 
-    )
-
+    <div className=" m-10 bg-white shadow overflow-hidden sm:rounded-md">
+      <div className="grid grid-cols-3 gap-4 m-10">
+        {toolListings.map((tool: ToolListing) =>
+        <div key={tool.id} className="max-w-sm rounded overflow-hidden shadow-lg">
+          <Image alt={tool.name}
+            className="rounded-t-lg"
+            width={200}
+            height={200}
+            src={tool.image} />
+          <div className="p-5">
+            <div className="font-bold text-xl mb-2">{ tool.name }</div> 
+            <p className="text-gray-700 text-base">${ tool.price }</p> 
+          </div>
+        </div> 
+        )}
+      </div>
+    </div>
     }
-    
-  </div>
+      
+    </div>
+  
 }
 
 export default ListTools
