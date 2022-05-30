@@ -27,6 +27,7 @@ const NewListing: NextPage = () => {
   const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject } =
     useDropzone({
       onDrop,
+      noClick: true,
       maxFiles: 1,
       maxSize: 1024 * 1024 * 10,
       accept: {
@@ -41,13 +42,9 @@ const NewListing: NextPage = () => {
       return `${base} border-gray-500`;
     }
     if (isDragReject) {
-      console.log("isDragReject");
       return `${base} border-red-500`;
     }
     if (isDragAccept) {
-      console.log("isDragAccept", isDragAccept);
-      console.log("isDragReject", isDragReject);
-      console.log("isFocused", isFocused);
       return `${base} border-indigo-500`;
     }
 
@@ -59,7 +56,7 @@ const NewListing: NextPage = () => {
   const [price, setPrice] = useState(0);
 
   return (
-    <form className="px-10 space-y-8 divide-y divide-gray-200 md:px-60">
+    <form className="px-10 mb-5 space-y-8 divide-y divide-gray-200 md:px-60">
       <div className="space-y-8 divide-y divide-gray-200 sm:space-y-5">
         <div>
           <div>
