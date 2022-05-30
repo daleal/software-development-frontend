@@ -3,6 +3,16 @@ import { useRouter } from 'next/router'
 import * as api from '@/api'
 import { useLocalStorage } from '@/hooks/localStorage'
 
+export interface GetTokenOptions {
+  redirect?: boolean
+}
+
+const getValueFromOptions = <OptionKey extends keyof GetTokenOptions>(
+  value: OptionKey,
+  options?: GetTokenOptions,
+  def?: GetTokenOptions[OptionKey],
+) => (options || {})[value] ?? def
+
 export const useSession = () => {
   const router = useRouter()
 
@@ -23,12 +33,8 @@ export const useSession = () => {
     setRefreshToken(null)
   }
 
-  const getToken = async (options?: { refresh?: boolean, redirect?: boolean }) => {
-    const refresh = (options || {}).refresh ?? true;
-    const redirect = (options || {}).redirect ?? true;
-    if (!refresh) {
-      return accessToken
-    }
+  const getToken = async (options?: GetTokenOptions) => {
+    const redirect = getValueFromOptions('redirect', options, true);
     try {
       if (accessToken) {
         try {
