@@ -16,6 +16,7 @@ export const RequireLoggedIn = ({ Component, pageProps }: AppProps) => {
 
   useEffect(() => {
     const checkUserLoggedIn = async () => {
+      setLoading(true)
       if (!NO_LOGIN_REQUIRED_PATHS.includes(router.pathname)) {
         await getToken()
       } else if (AUTH_PATHS.includes(router.pathname)) {
@@ -27,7 +28,7 @@ export const RequireLoggedIn = ({ Component, pageProps }: AppProps) => {
       setLoading(false)
     }
     checkUserLoggedIn()
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [Component]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) {
     return <div>Loading...</div>

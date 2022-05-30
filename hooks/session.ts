@@ -53,11 +53,13 @@ export const useSession = () => {
       }
       return accessToken
     } catch {
-      logout()
-      if (redirect) {
-        await router.push('/login')
-      } else {
-        throw new Error('Invalid credentials')
+      if (typeof window !== 'undefined') {
+        logout()
+        if (redirect) {
+          await router.push('/login')
+        } else {
+          throw new Error('Invalid credentials')
+        }
       }
       return null
     }
