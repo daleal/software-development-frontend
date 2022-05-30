@@ -28,11 +28,13 @@ const ListTools: NextPage = () => {
       <div className="grid grid-cols-3 gap-4 m-10">
         {toolListings.map((tool: ToolListing) =>
         <div key={tool.id} className="max-w-sm rounded overflow-hidden shadow-lg">
-          <Image alt={tool.name}
+          <div className='relative w-full h-44'>
+            <Image alt={tool.name}
             className="rounded-t-lg"
-            width={200}
-            height={200}
+            layout="fill" // required
+            objectFit="cover"
             src={tool.image} />
+          </div>
           <div className="p-5">
             <div className="font-bold text-xl mb-2">{ tool.name }</div> 
             <p className="text-gray-700 text-base">${ tool.price }</p> 
