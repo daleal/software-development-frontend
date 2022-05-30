@@ -1,6 +1,5 @@
 import client from './client'
 import { Nullable } from '@/types/common'
-import type { GetTokenOptions } from '@/hooks/session'
 
 export const setupAPIAuthInterceptors = (getToken: () => Promise<Nullable<string>>) => {
   client.interceptors.request.use(async (config) => {
