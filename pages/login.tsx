@@ -10,7 +10,7 @@ const Login: NextPage = () => {
 
   const loginMethod = async (username: string, password: string) => {
     await login(username, password)
-    router.push('/tools')
+    await router.push('/')
   }
 
   return <>
