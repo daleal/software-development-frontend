@@ -18,8 +18,7 @@ const Signup: NextPage = () => {
   const signUp = async (username: string, password: string, phoneNumber?: string) => {
     try {
       setLoading(true)
-      const resp = await api.user.create(username, phoneNumber || '', password)
-      console.log(resp)
+      await api.user.create(username, phoneNumber || '', password)
       await router.push('/login')
     } catch (error) {
       if (axios.isAxiosError(error)) {
