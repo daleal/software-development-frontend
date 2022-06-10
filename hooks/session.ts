@@ -56,7 +56,7 @@ export const useSession = () => {
       if (typeof window !== 'undefined') {
         logout()
         if (redirect) {
-          await router.push('/login')
+          if (!['/login', '/signup'].includes(router.pathname)) await router.push('/login')
         } else {
           throw new Error('Invalid credentials')
         }
