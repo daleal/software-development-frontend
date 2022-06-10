@@ -18,8 +18,8 @@ const Signup: NextPage = () => {
   const signUp = async (username: string, password: string, phoneNumber?: string) => {
     try {
       setLoading(true)
-      await api.user.create(username, phoneNumber || '', password)
-      await router.push('/login')
+      const response = await api.user.create(username, phoneNumber || '', password)
+      if (response) await router.push('/login')
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorData = (error.response?.data || {}) as SignInError
