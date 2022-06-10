@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import * as api from '@/api'
@@ -13,12 +13,14 @@ const Signup: NextPage = () => {
   const [phoneNumberError, setPhoneNumberError] = useState('')
   const [passwordError, setPasswordError] = useState('')
   const [loading, setLoading] = useState(false)
+  const mounted = useRef(false);
 
   const signUp = async (username: string, password: string, phoneNumber?: string) => {
     try {
       setLoading(true)
-      await api.user.create(username, phoneNumber || '', password)
-      router.push('/login')
+      const resp = await api.user.create(username, phoneNumber || '', password)
+      console.log(resp)
+      await router.push('/login')
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorData = (error.response?.data || {}) as SignInError
