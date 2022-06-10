@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import * as api from '@/api'
@@ -13,7 +13,6 @@ const Signup: NextPage = () => {
   const [phoneNumberError, setPhoneNumberError] = useState('')
   const [passwordError, setPasswordError] = useState('')
   const [loading, setLoading] = useState(false)
-  const mounted = useRef(false);
 
   const signUp = async (username: string, password: string, phoneNumber?: string) => {
     try {
