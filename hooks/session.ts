@@ -55,14 +55,12 @@ export const useSession = () => {
       return accessToken
     } catch {
       if (typeof window !== 'undefined') {
-        //logout()
         if (redirect) {
-           // await router.push('/login')
+           return null
         } else {
           throw new Error('Invalid credentials')
         }
       }
-      return null
     }
   }
 
