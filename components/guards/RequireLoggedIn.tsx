@@ -10,7 +10,7 @@ const NO_LOGIN_REQUIRED_PATHS = [...AUTH_PATHS, ...OPEN_PATHS]
 
 export const RequireLoggedIn = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
-  const { getToken } = useSession()
+  const { getToken, logout } = useSession()
 
   const [loading, setLoading] = useState(true)
 
@@ -18,7 +18,8 @@ export const RequireLoggedIn = ({ Component, pageProps }: AppProps) => {
     const checkUserLoggedIn = async () => {
       setLoading(true)
       if (!NO_LOGIN_REQUIRED_PATHS.includes(router.pathname)) {
-        await getToken()
+        const token = await getToken()
+        if (!token) await logout()
       } else if (AUTH_PATHS.includes(router.pathname)) {
         try {
           await getToken({ redirect: false })

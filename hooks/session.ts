@@ -55,12 +55,11 @@ export const useSession = () => {
       return accessToken
     } catch {
       if (typeof window !== 'undefined') {
-        if (redirect) {
-           return null
-        } else {
+        if (!redirect) {
           throw new Error('Invalid credentials')
         }
       }
+      return null
     }
   }
 
