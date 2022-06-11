@@ -35,7 +35,6 @@ export const useSession = () => {
   }
 
   const getToken = async (options?: GetTokenOptions) => {
-    const redirect = getValueFromOptions('redirect', options, true)
     try {
       if (accessToken) {
         try {
@@ -55,9 +54,7 @@ export const useSession = () => {
       return accessToken
     } catch {
       if (typeof window !== 'undefined') {
-        if (!redirect) {
-          throw new Error('Invalid credentials')
-        }
+        throw new Error('Invalid credentials')
       }
       return null
     }

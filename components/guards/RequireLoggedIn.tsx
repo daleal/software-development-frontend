@@ -18,8 +18,11 @@ export const RequireLoggedIn = ({ Component, pageProps }: AppProps) => {
     const checkUserLoggedIn = async () => {
       setLoading(true)
       if (!NO_LOGIN_REQUIRED_PATHS.includes(router.pathname)) {
-        const token = await getToken()
-        if (!token) await logout()
+        try {
+          await getToken()
+        } catch {
+          await logout()
+        }
       } else if (AUTH_PATHS.includes(router.pathname)) {
         try {
           await getToken({ redirect: false })
