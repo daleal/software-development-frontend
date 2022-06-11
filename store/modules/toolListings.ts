@@ -12,6 +12,11 @@ const initialState: ToolListingsState = {
   listings: [],
 }
 
+export const loadMyToolListings = createAsyncThunk('toolListings/loadMine', async () => {
+  const toolListings = await api.toolListings.listMine()
+  return toolListings
+})
+
 export const loadToolListings = createAsyncThunk('toolListings/load', async () => {
   const toolListings = await api.toolListings.list()
   return toolListings
