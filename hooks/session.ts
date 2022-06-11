@@ -28,15 +28,14 @@ export const useSession = () => {
     }
   }
 
-  const logout = () => {
+  const logout = async() => {
     setAccessToken(null)
     setRefreshToken(null)
+    await router.push('/login')
   }
 
   const getToken = async (options?: GetTokenOptions) => {
-    let redirect
-    if (!['/login', '/signup'].includes(router.pathname)) redirect = getValueFromOptions('redirect', options, true)
-    else redirect = false
+    const redirect = getValueFromOptions('redirect', options, true)
     try {
       if (accessToken) {
         try {
@@ -56,9 +55,9 @@ export const useSession = () => {
       return accessToken
     } catch {
       if (typeof window !== 'undefined') {
-        logout()
+        //logout()
         if (redirect) {
-           await router.push('/login')
+           // await router.push('/login')
         } else {
           throw new Error('Invalid credentials')
         }
