@@ -25,7 +25,7 @@ export const RequireLoggedIn = ({ Component, pageProps }: AppProps) => {
         }
       } else if (AUTH_PATHS.includes(router.pathname)) {
         try {
-          await getToken({ redirect: false })
+          await getToken()
           await router.push('/')
         } catch { }
       }
