@@ -21,7 +21,7 @@ export const create = async (
     name,
     description,
     price,
-    image: { created: null, file: image },
+    image: image ,
   })
   return response.data
 }
