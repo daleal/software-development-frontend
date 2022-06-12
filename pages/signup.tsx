@@ -18,6 +18,7 @@ const Signup: NextPage = () => {
     try {
       setLoading(true)
       await api.user.create(username, phoneNumber || '', password)
+      window.alert('signed up!')
       router.push('/login')
     } catch (error) {
       if (axios.isAxiosError(error)) {

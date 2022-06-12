@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import * as api from '@/api'
-import { useLocalStorage } from '@/hooks/localStorage'
 
 export interface GetTokenOptions {
   redirect?: boolean
@@ -16,50 +15,43 @@ const getValueFromOptions = <OptionKey extends keyof GetTokenOptions>(
 export const useSession = () => {
   const router = useRouter()
 
-  const [accessToken, setAccessToken] = useLocalStorage('access-token')
-  const [refreshToken, setRefreshToken] = useLocalStorage('refresh-token')
   const [loggingIn, setLoggingIn] = useState(false)
 
   const refreshAccessToken = async () => {
-    setAccessToken(null)
-    if (refreshToken) {
-      const response = await api.jwt.refresh(refreshToken)
-      setAccessToken(response.access)
+    localStorage.removeItem('access-token')
+    if (localStorage.getItem('refresh-token')) {
+      const response = await api.jwt.refresh(localStorage.getItem('refresh-token') || '')
+      localStorage.setItem('access-token', response.access)
     }
   }
 
-  const logout = () => {
-    setAccessToken(null)
-    setRefreshToken(null)
+  const logout = async() => {
+    localStorage.removeItem('access-token')
+    localStorage.removeItem('refresh-token')
+    await router.push('/login')
   }
 
   const getToken = async (options?: GetTokenOptions) => {
-    const redirect = getValueFromOptions('redirect', options, true);
     try {
-      if (accessToken) {
+      if (localStorage.getItem('access-token')) {
         try {
-          await api.jwt.verify(accessToken)
+          await api.jwt.verify(localStorage.getItem('access-token') || '')
         } catch {
           await refreshAccessToken()
         }
-        if (!accessToken) {
+        if (!localStorage.getItem('access-token')) {
           throw new Error('Invalid credentials')
         }
-        return accessToken
+        return localStorage.getItem('access-token')
       }
       await refreshAccessToken()
-      if (!accessToken) {
+      if (!localStorage.getItem('access-token')) {
         throw new Error('Invalid credentials')
       }
-      return accessToken
+      return localStorage.getItem('access-token')
     } catch {
       if (typeof window !== 'undefined') {
-        logout()
-        if (redirect) {
-          await router.push('/login')
-        } else {
-          throw new Error('Invalid credentials')
-        }
+        throw new Error('Invalid credentials')
       }
       return null
     }
@@ -69,8 +61,8 @@ export const useSession = () => {
     try {
       setLoggingIn(true)
       const response = await api.jwt.create(username, password)
-      setAccessToken(response.access)
-      setRefreshToken(response.refresh)
+      localStorage.setItem('access-token', response.access)
+      localStorage.setItem('refresh-token', response.refresh)
     } finally {
       setLoggingIn(false)
     }
@@ -80,8 +72,6 @@ export const useSession = () => {
     login,
     loggingIn,
     logout,
-    getToken,
-    accessToken,
-    refreshToken,
+    getToken
   }
 }

@@ -8,9 +8,9 @@ import { RequireLoggedIn } from '@/components/guards/RequireLoggedIn'
 import '@/styles/globals.css'
 
 function MyApp(appProps: AppProps) {
-  const { getToken } = useSession()
+  const { getToken, logout } = useSession()
 
-  setupAPIAuthInterceptors(getToken);
+  setupAPIAuthInterceptors(getToken, logout);
 
   return <>
     <Provider store={store}>
