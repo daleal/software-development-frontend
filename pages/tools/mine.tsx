@@ -18,7 +18,7 @@ const MyTools: NextPage = () => {
         setToolListings(listings)
       }
       loadListing()
-    }, [])
+    }, [dispatch])
 
   return ( 
     <div>
