@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import * as api from '@/api'
-import { useLocalStorage } from '@/hooks/localStorage'
 
 export interface GetTokenOptions {
   redirect?: boolean
