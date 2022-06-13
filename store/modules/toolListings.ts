@@ -37,6 +37,14 @@ export const createToolListing = createAsyncThunk(
   }
 )
 
+export const removeToolListing = createAsyncThunk(
+  'toolListings/remove',
+  async (id: number) => {
+    const toolListing = await api.toolListings.remove(id)
+    return toolListing
+  }
+)
+
 export const toolListingsSlice = createSlice({
   name: 'toolListings',
   initialState,
@@ -62,6 +70,13 @@ export const toolListingsSlice = createSlice({
       state.loading = true
     })
     builder.addCase(createToolListing.fulfilled, (state) => {
+      state.loading = false
+    })
+    // delete
+    builder.addCase(removeToolListing.pending, (state) => {
+      state.loading = true
+    })
+    builder.addCase(removeToolListing.fulfilled, (state) => {
       state.loading = false
     })
   }

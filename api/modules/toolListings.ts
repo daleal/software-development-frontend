@@ -30,3 +30,10 @@ export const create = async (
   })
   return response.data
 }
+
+export const remove = async (
+  id: number,
+): Promise<ToolListing> => {
+  const response = await client.delete(`/api/tool-listings/${id}`)
+  return response.data
+}
