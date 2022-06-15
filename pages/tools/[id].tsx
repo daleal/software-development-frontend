@@ -5,10 +5,11 @@ import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from '@/store'
 import { user } from '@/api/index'
 import type { NextPage } from 'next'
-import { loadToolListing, removeToolListing } from '@/store/modules/toolListings'
+import { loadToolListing, removeToolListing, rentToolListing, unrentToolListing } from '@/store/modules/toolListings'
 import type { Nullable } from '@/types/common'
 import type { ToolListing } from '@/types/entities/toolListing'
 import Image from 'next/image'
+import { Status } from '@/types/api/status'
 
 
 const ToolListingDetail: NextPage = () => {
@@ -18,6 +19,7 @@ const ToolListingDetail: NextPage = () => {
   const id = parseInt(router.query.id as string, 10)
   const [toolListing, setToolListing] = useState<Nullable<ToolListing>>(null)
   const [isPublisher, setIsPublisher] = useState<Boolean>(false)
+  const [isRented, setIsRented] = useState<Boolean>(false)
 
   useEffect(() => {
     const loadListing = async () => {
@@ -37,8 +39,29 @@ const ToolListingDetail: NextPage = () => {
     getUserId()
   }, [toolListing])
 
+  useEffect(() => {
+    const checkStatus = (async () => {
+      if (toolListing) {
+        setIsRented(toolListing.status == Status.Rented)
+      }
+    })
+    checkStatus()
+  }, [toolListing])
+
   const deleteTool = async () => {
     await dispatch(removeToolListing(id))
+    await router.push('/tools/mine')
+  }
+
+  const rentTool = async () => {
+    await dispatch(rentToolListing(id))
+    window.alert('Successfully rented!')
+    await router.push('/tools/')
+  }
+
+  const unrentTool = async () => {
+    await dispatch(unrentToolListing(id))
+    window.alert('Successfully republished tool!')
     await router.push('/tools/mine')
   }
 
@@ -62,19 +85,42 @@ const ToolListingDetail: NextPage = () => {
                       src={toolListing.image} />
                       <div className="lg:col-start-3 lg:col-span-2 mt-16">
                         <h1 className="font-bold text-4xl text-blue-800">{toolListing.name}</h1>
-                        <p className="text-sm text-gray-500">{toolListing.price}</p>
+                        <h2 className="font-bold text-yellow-400 xl"> $ {toolListing.price} </h2>
+                        <p className="text-sm text-gray-500"> Para arrendar esta herramienta por favor
+                        contáctate directamente con el arrendador. </p>
+                        <p className="text-sm text-gray-500"> Número de contacto:  </p>
                       </div>
                   </div>
-                  { isPublisher ? 
+                  { isPublisher ?
+                      isRented ?
                         <div className="flex justify-center w-100">
-                      <button
-                        className="my-4 px-3 py-1 text-white bg-red-500 rounded"
-                        onClick={deleteTool}
-                      >
-                        Eliminar herramienta
-                      </button>
-                    </div>
-                    : <></>
+                          <button
+                            className="my-4 px-3 py-1 text-white bg-red-500 rounded"
+                            onClick={unrentTool}
+                          >
+                            Terminar arriendo
+                          </button>
+                        </div>
+                      :
+                        <div className="flex justify-center w-100">
+                          <button
+                            className="my-4 px-3 py-1 text-white bg-red-500 rounded"
+                            onClick={deleteTool}
+                          >
+                            Eliminar herramienta
+                          </button>
+                        </div>
+                    : 
+                      !isRented ? 
+                        <div className="flex justify-center w-100">
+                          <button
+                            className="my-4 px-3 py-1 text-white bg-blue-500 rounded"
+                            onClick={rentTool}
+                          >
+                            Arrendar
+                          </button>
+                        </div>
+                      : <></>
                   }
                 </div>
                 
