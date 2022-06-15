@@ -12,11 +12,13 @@ const NewListing: NextPage = () => {
   const dispatch = useDispatch()
   const [selectedImage, setSelectedImage] = useState<Blob>()
   const [selectedImageBase64, setSelectedImageBase64] = useState<Nullable<string>>(null)
-  const [rejectionError, setRejectionError] = useState<FileRejection>()
+  const [imageError, setImageError] = useState('')
 
   const onDrop = (acceptedFiles: Blob[], fileRejections: FileRejection[]) => {
     setSelectedImage(acceptedFiles[0])
-    setRejectionError(fileRejections[0])
+    if (!!fileRejections[0]?.errors?.[0].message) {
+      setImageError('No es una imagen válida, por favor sube otra imagen.')
+    }
   }
   const previewImage = useMemo(() => {
     if (selectedImage) {
@@ -76,18 +78,14 @@ const NewListing: NextPage = () => {
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (selectedImageBase64) {
-      try {
-        const created = await dispatch(createToolListing({
-          name: title,
-          description,
-          price,
-          image: selectedImageBase64,
-        })).unwrap()
-      } catch(error) {
-        console.log(error)
-      }
-      
-
+      const created = await dispatch(createToolListing({
+        name: title,
+        description,
+        price,
+        image: selectedImageBase64,
+      })).unwrap()
+    } else {
+      setImageError('Debes incluir una imagen en la publicación.')
     }
   }
 
@@ -228,11 +226,12 @@ const NewListing: NextPage = () => {
                     <p className="text-xs text-gray-500">PNG, JPG hasta 10MB</p>
                   </div>
                 </div>
-                {rejectionError?.errors?.[0].message && (
+                {
+                  imageError &&
                   <p className="mt-2 text-sm text-red-500">
-                    No es una imagen válida, por favor sube otra imagen
+                    {imageError}
                   </p>
-                )}
+                }
               </div>
             </div>
           </div>
