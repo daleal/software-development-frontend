@@ -71,17 +71,22 @@ const NewListing: NextPage = () => {
 
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [price, setPrice] = useState(0)
+  const [price, setPrice] = useState<undefined | number>(undefined)
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (selectedImageBase64) {
-      const created = await dispatch(createToolListing({
-        name: title,
-        description,
-        price,
-        image: selectedImageBase64,
-      })).unwrap()
+      try {
+        const created = await dispatch(createToolListing({
+          name: title,
+          description,
+          price,
+          image: selectedImageBase64,
+        })).unwrap()
+      } catch(error) {
+        console.log(error)
+      }
+      
 
     }
   }
@@ -118,6 +123,7 @@ const NewListing: NextPage = () => {
                   className="block w-full max-w-lg border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
+                  required
                 />
               </div>
             </div>
@@ -135,7 +141,9 @@ const NewListing: NextPage = () => {
                   id="price"
                   className="block w-full max-w-lg border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm"
                   value={price}
-                  onChange={(e) => Number(e.target.value) < 0 ? setPrice(0) : setPrice(Number(e.target.value))}
+                  onChange={(e) => e.target.value ? Number(e.target.value) < 0 ?
+                     setPrice(0) : setPrice(Number(e.target.value)) : setPrice(undefined)}
+                  required
                 />
               </div>
             </div>
@@ -154,6 +162,7 @@ const NewListing: NextPage = () => {
                   className="block w-full max-w-lg border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   onChange={(e) => setDescription(e.target.value)}
                   value={description}
+                  required
                 />
                 <p className="mt-2 text-sm text-gray-500">
                   Cuéntanos un poco de la herramienta que quieres arrendar.

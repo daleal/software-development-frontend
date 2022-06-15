@@ -14,7 +14,7 @@ export const get = async (id: number): Promise<ToolListing> => {
 export const create = async (
   name: string,
   description: string,
-  price: number,
+  price: number | undefined,
   image: string,
 ): Promise<ToolListing> => {
   const response = await client.post('/api/tool-listings/', {
