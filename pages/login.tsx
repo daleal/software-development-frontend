@@ -5,6 +5,7 @@ import UserForm from '@/components/UserForm'
 import { useState } from 'react'
 import axios from 'axios'
 import type { LogInError } from '@/types/api/errors'
+import { errors } from '@/constants/errors'
 
 const Login: NextPage = () => {
   const router = useRouter()
@@ -22,7 +23,7 @@ const Login: NextPage = () => {
         const errorData = (error.response?.data || {}) as LogInError
         console.log(errorData)
         if (!!errorData.detail) {
-          setLoginError(errorData.detail)
+          setLoginError(errors.login[errorData.detail as keyof typeof errors.login])
         }
       }
     }

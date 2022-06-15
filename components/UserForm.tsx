@@ -181,7 +181,7 @@ const UserForm = (props: Props) => {
           }
         </div>
           { !!props.loginError &&
-            <p className="mt-1 text-sm text-red-900">
+            <p className="mb-5 text-sm text-red-900">
               { props.loginError }
             </p>
           }

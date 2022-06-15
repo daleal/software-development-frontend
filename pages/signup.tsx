@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import * as api from '@/api'
 import UserForm from '@/components/UserForm'
 import type { SignInError } from '@/types/api/errors'
+import { errors } from '@/constants/errors'
 
 const Signup: NextPage = () => {
   const router = useRouter()
@@ -24,10 +25,14 @@ const Signup: NextPage = () => {
       if (axios.isAxiosError(error)) {
         const errorData = (error.response?.data || {}) as SignInError
         if (!!errorData.username) {
-          setUsernameError(errorData.username[0])
+          setUsernameError(
+            errors.signup.username[errorData.username[0] as keyof typeof errors.signup.username] || errorData.username[0]
+            )
         }
         if (!!errorData.phoneNumber) {
-          setPhoneNumberError(errorData.phoneNumber[0])
+          setPhoneNumberError(
+            errors.signup.phoneNumber[errorData.phoneNumber[0] as keyof typeof errors.signup.phoneNumber] || errorData.phoneNumber[0]
+            )
         }
         if (!!errorData.password) {
           setPasswordError(errorData.password[0])
