@@ -17,13 +17,10 @@ const Signup: NextPage = () => {
   const signUp = async (username: string, password: string, phoneNumber?: string) => {
     try {
       setLoading(true)
-      const response = await api.user.create(username, phoneNumber || '', password)
-      if (!!response) {
-        window.alert('signed up!')
-        router.push('/login')
-      }
+      await api.user.create(username, phoneNumber || '', password)
+      window.alert('signed up!')
+      router.push('/login')
     } catch (error) {
-      console.log('there is an error')
       if (axios.isAxiosError(error)) {
         const errorData = (error.response?.data || {}) as SignInError
         if (!!errorData.username) {

@@ -18,9 +18,7 @@ const Login: NextPage = () => {
       await login(username, password)
       await router.push('/')
     } catch(error) {
-      console.log('there is an error')
       if (axios.isAxiosError(error)) {
-        
         const errorData = (error.response?.data || {}) as LogInError
         console.log(errorData)
         if (!!errorData.detail) {
