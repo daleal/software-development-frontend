@@ -104,7 +104,7 @@ const UserForm = (props: Props) => {
             htmlFor="username"
             className="block mb-2 text-sm font-medium text-gray-900"
           >
-            Your username
+            Nombre de usuario
           </label>
           <input
             id="username"
@@ -131,7 +131,7 @@ const UserForm = (props: Props) => {
               htmlFor="phone-number"
               className="block mb-2 text-sm font-medium text-gray-900"
             >
-              Your phone number
+              Numero de teléfono
             </label>
             <input
               id="phone-number"
@@ -158,7 +158,7 @@ const UserForm = (props: Props) => {
             htmlFor="password"
             className="block mb-2 text-sm font-medium text-gray-900"
           >
-            Your password
+            Contraseña
           </label>
           <input
             type="password"
@@ -194,7 +194,7 @@ const UserForm = (props: Props) => {
           "
           disabled={props.loading}
         >
-          Submit
+          Enviar
         </button>
       </form>
     </div>

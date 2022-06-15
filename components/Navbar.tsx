@@ -34,12 +34,12 @@ export default function Navbar() {
           <div className="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
             <Link href="/login">
               <a className="font-medium text-blue-800 hover:text-blue-800">
-                Log in
+                Iniciar sesión
               </a>
             </Link>
             <Link href="/signup">
               <a className="font-medium text-blue-800 hover:text-blue-800">
-                Sign up
+                Crear cuenta
               </a>
             </Link>
             <Link href="/new-listing">

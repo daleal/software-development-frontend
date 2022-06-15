@@ -36,7 +36,7 @@ const Login: NextPage = () => {
   }
 
   return <>
-    <div className="mt-8 w-full text-center text-4xl font-semibold">Login</div>
+    <div className="mt-8 w-full text-center text-4xl font-semibold">Iniciar sesión</div>
     <UserForm
       loading={loggingIn}
       onSubmit={loginMethod}

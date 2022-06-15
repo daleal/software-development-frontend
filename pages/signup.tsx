@@ -56,7 +56,7 @@ const Signup: NextPage = () => {
   }
 
   return <>
-    <div className="mt-8 w-full text-center text-4xl font-semibold">Sign Up</div>
+    <div className="mt-8 w-full text-center text-4xl font-semibold">Crear cuenta</div>
     <UserForm
       usernameError={usernameError}
       phoneNumberError={phoneNumberError}
