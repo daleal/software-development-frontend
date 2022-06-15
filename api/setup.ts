@@ -19,8 +19,11 @@ export const setupAPIAuthInterceptors = (getToken: (options?: GetTokenOptions) =
     return config
   })
 
-  client.interceptors.response.use(async (error)=> {
-    if(error.status === 401) {
+  client.interceptors.response.use(
+    response => response,
+    async (error)=> {
+    if (error.response.status === 401) {
+      console.log('not authorized')
       await logout()
     }
     return error

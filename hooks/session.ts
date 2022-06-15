@@ -28,7 +28,7 @@ export const useSession = () => {
   const logout = async() => {
     localStorage.removeItem('access-token')
     localStorage.removeItem('refresh-token')
-    await router.push('/login')
+    router.push('/login')
   }
 
   const getToken = async (options?: GetTokenOptions) => {
