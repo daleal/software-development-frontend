@@ -82,6 +82,7 @@ const NewListing: NextPage = () => {
         price,
         image: selectedImageBase64,
       })).unwrap()
+
     }
   }
 

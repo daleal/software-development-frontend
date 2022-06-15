@@ -3,8 +3,9 @@ import { StarIcon } from '@heroicons/react/solid'
 import { RadioGroup } from '@headlessui/react'
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from '@/store'
+import { user } from '@/api/index'
 import type { NextPage } from 'next'
-import { loadToolListing } from '@/store/modules/toolListings'
+import { loadToolListing, removeToolListing } from '@/store/modules/toolListings'
 import type { Nullable } from '@/types/common'
 import type { ToolListing } from '@/types/entities/toolListing'
 import Image from 'next/image'
@@ -16,6 +17,7 @@ const ToolListingDetail: NextPage = () => {
   const { loading } = useSelector((state) => state.toolListings)
   const id = parseInt(router.query.id as string, 10)
   const [toolListing, setToolListing] = useState<Nullable<ToolListing>>(null)
+  const [isPublisher, setIsPublisher] = useState<Boolean>(false)
 
   useEffect(() => {
     const loadListing = async () => {
@@ -24,6 +26,21 @@ const ToolListingDetail: NextPage = () => {
     }
     loadListing()
   }, [id, dispatch])
+
+  useEffect(() => {
+    const getUserId = (async () => {
+      if (toolListing) {
+        const userData = await user.get()
+        setIsPublisher(userData.id == toolListing.publisher)
+      }
+    })
+    getUserId()
+  }, [toolListing])
+
+  const deleteTool = async () => {
+    await dispatch(removeToolListing(id))
+    await router.push('/tools/mine')
+  }
 
   return (
     <div className="bg-white">
@@ -48,6 +65,17 @@ const ToolListingDetail: NextPage = () => {
                         <p className="text-sm text-gray-500">{toolListing.price}</p>
                       </div>
                   </div>
+                  { isPublisher ? 
+                        <div className="flex justify-center w-100">
+                      <button
+                        className="my-4 px-3 py-1 text-white bg-red-500 rounded"
+                        onClick={deleteTool}
+                      >
+                        Eliminar herramienta
+                      </button>
+                    </div>
+                    : <></>
+                  }
                 </div>
                 
                 </>

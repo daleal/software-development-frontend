@@ -13,7 +13,7 @@ export default function Navbar() {
           aria-label="Global"
         >
           <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
-            <div className="flex items-center justify-between w-full md:w-auto">
+            <div className="flex items-center justify-between w-full lg:w-auto">
               <a href="#">
                 <span className="sr-only">Workflow</span>
                 <Image
@@ -23,15 +23,15 @@ export default function Navbar() {
                   height={60}
                 />
               </a>
-              <div className="flex items-center -mr-2 md:hidden">
-                <Popover.Button className="inline-flex items-center justify-center p-2 text-gray-400 bg-white rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-800">
+              <div className="flex items-center -mr-2 lg:hidden">
+                <Popover.Button className="inline-flex items-center justify-center p-2 text-gray-400 bg-white rounded-lg hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-800">
                   <span className="sr-only">Open main menu</span>
                   <MenuIcon className="w-6 h-6" aria-hidden="true" />
                 </Popover.Button>
               </div>
             </div>
           </div>
-          <div className="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
+          <div className="hidden lg:block lg:ml-10 lg:pr-4 lg:space-x-8">
             <Link href="/login">
               <a className="font-medium text-blue-800 hover:text-blue-800">
                 Log in
@@ -45,6 +45,16 @@ export default function Navbar() {
             <Link href="/new-listing">
               <a className="font-medium text-blue-800 hover:text-blue-800">
                 Publicar una herramienta
+              </a>
+            </Link>
+            <Link href="/tools">
+              <a className="font-medium text-blue-800 hover:text-blue-800">
+                Arrendar
+              </a>
+            </Link>
+            <Link href="/tools/mine">
+              <a className="font-medium text-blue-800 hover:text-blue-800">
+                Mis herramientas
               </a>
             </Link>
           </div>
@@ -62,12 +72,12 @@ export default function Navbar() {
       >
         <Popover.Panel
           focus
-          className="absolute inset-x-0 top-0 z-10 p-2 transition origin-top-right transform md:hidden"
+          className="absolute inset-x-0 top-0 z-10 p-2 transition origin-top-right transform lg:hidden"
         >
-          <div className="overflow-hidden bg-white rounded-lg shadow-md ring-1 ring-black ring-opacity-5">
+          <div className="overflow-hidden bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
             <div className="flex items-center justify-between px-5 pt-4">
               <div className="-mr-2">
-                <Popover.Button className="inline-flex items-center justify-center p-2 text-gray-400 bg-white rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-800">
+                <Popover.Button className="inline-flex items-center justify-center p-2 text-gray-400 bg-white rounded-lg hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-800">
                   <span className="sr-only">Close main menu</span>
                   <XIcon className="w-6 h-6" aria-hidden="true" />
                 </Popover.Button>
@@ -86,6 +96,16 @@ export default function Navbar() {
             <Link href="/new-listing">
               <a className="block w-full px-5 py-3 font-medium text-center text-blue-800 bg-gray-50 hover:bg-gray-100">
                 Publicar una herramienta
+              </a>
+            </Link>
+            <Link href="/tools">
+              <a className="block w-full px-5 py-3 font-medium text-center text-blue-800 bg-gray-50 hover:bg-gray-100">
+                Arrendar
+              </a>
+            </Link>
+            <Link href="/tools/mine">
+              <a className="block w-full px-5 py-3 font-medium text-center text-blue-800 bg-gray-50 hover:bg-gray-100">
+                Mis herramientas
               </a>
             </Link>
           </div>
