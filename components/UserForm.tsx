@@ -5,6 +5,7 @@ interface Props {
   usernameError?: string
   phoneNumberError?: string
   passwordError?: string
+  loginError?: string
   showPhoneNumber?: boolean
   loading: boolean
   onSubmit: (username: string, password: string, phoneNumber?: string) => void
@@ -61,6 +62,28 @@ const UserForm = (props: Props) => {
       `)
     }
   }, [props.passwordError])
+
+  useEffect(() => {
+    if (!!props.loginError) {
+      setUsernameClasses(`
+        text-red-900 bg-red-50 border-red-500 placeholder-red-700
+        focus:ring-red-500 focus:border-red-500
+      `)
+      setPasswordClasses(`
+        text-red-900 bg-red-50 border-red-500 placeholder-red-700
+        focus:ring-red-500 focus:border-red-500
+      `)
+    } else {
+      setUsernameClasses(`
+        text-gray-900 bg-white border-slate-300 placeholder-slate-400
+        focus:ring-blue-500 focus:border-blue-500
+      `)
+      setPasswordClasses(`
+        text-gray-900 bg-white border-slate-300 placeholder-slate-400
+        focus:ring-blue-500 focus:border-blue-500
+      `)
+    }
+  }, [props.loginError])
 
   const bindFormEventData = (valueSetter: Dispatch<SetStateAction<string>>) => (
     (event: ChangeEvent<HTMLInputElement>) => valueSetter(event.target.value)
@@ -157,6 +180,11 @@ const UserForm = (props: Props) => {
             </p>
           }
         </div>
+          { !!props.loginError &&
+            <p className="mt-1 text-sm text-red-900">
+              { props.loginError }
+            </p>
+          }
         <button
           type="submit"
           className="

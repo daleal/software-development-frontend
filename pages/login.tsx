@@ -18,8 +18,11 @@ const Login: NextPage = () => {
       await login(username, password)
       await router.push('/')
     } catch(error) {
+      console.log('there is an error')
       if (axios.isAxiosError(error)) {
+        
         const errorData = (error.response?.data || {}) as LogInError
+        console.log(errorData)
         if (!!errorData.detail) {
           setLoginError(errorData.detail)
         }
@@ -27,7 +30,7 @@ const Login: NextPage = () => {
     }
   }
 
-  const onBlur = (field: 'username' | 'password') => {
+  const onBlur = (field: 'username' | 'phone-number' | 'password') => {
     if (field) {
       setLoginError('')
     }
@@ -38,8 +41,8 @@ const Login: NextPage = () => {
     <UserForm
       loading={loggingIn}
       onSubmit={loginMethod}
-      usernameError={loginError}
-      passwordError={loginError}
+      loginError={loginError}
+      onBlur={onBlur}
     />
   </>
 }
