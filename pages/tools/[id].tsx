@@ -53,6 +53,7 @@ const ToolListingDetail: NextPage = () => {
             {loading
               ? <p>Loading</p>
               : 
+                  toolListing?
                 <>
                 <div className="lg:col-start-1 lg:col-span-2">
                   <div className="flex justify-between">
@@ -79,6 +80,8 @@ const ToolListingDetail: NextPage = () => {
                   }
                 </div>
                 </>
+                :
+                <p>Ha ocurrido un error</p>
             }
           </div>
         </div>
