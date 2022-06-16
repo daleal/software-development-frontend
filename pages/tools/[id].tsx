@@ -8,6 +8,7 @@ import { loadToolListing } from '@/store/modules/toolListings'
 import type { Nullable } from '@/types/common'
 import type { ToolListing } from '@/types/entities/toolListing'
 import Image from 'next/image'
+import Error from 'next/error'
 
 
 const ToolListingDetail: NextPage = () => {
@@ -25,6 +26,8 @@ const ToolListingDetail: NextPage = () => {
     loadListing()
   }, [id, dispatch])
 
+  if (!toolListing) return <Error statusCode={404} />
+
   return (
     <div className="bg-white">
       <div className="pt-6 pb-16 sm:pb-24">
@@ -33,8 +36,6 @@ const ToolListingDetail: NextPage = () => {
             {loading
               ? <p>Loading</p>
               : 
-              toolListing ?
-              ( 
                 <>
                 <div className="lg:col-start-1 lg:col-span-2">
                   <div className="flex justify-between">
@@ -49,11 +50,7 @@ const ToolListingDetail: NextPage = () => {
                       </div>
                   </div>
                 </div>
-                
                 </>
-              )
-              :
-              <p>No se ha encontrado la herramienta.</p>
             }
           </div>
         </div>

@@ -52,6 +52,9 @@ export const toolListingsSlice = createSlice({
     builder.addCase(loadToolListing.fulfilled, (state) => {
       state.loading = false
     })
+    builder.addCase(loadToolListing.rejected, (state) => {
+      state.loading = false
+    })
     // create
     builder.addCase(createToolListing.pending, (state) => {
       state.loading = true
