@@ -9,7 +9,7 @@ import { loadToolListing, removeToolListing } from '@/store/modules/toolListings
 import type { Nullable } from '@/types/common'
 import type { ToolListing } from '@/types/entities/toolListing'
 import Image from 'next/image'
-import Error from 'next/error'
+import Custom404 from '../404'
 
 
 const ToolListingDetail: NextPage = () => {
@@ -43,7 +43,7 @@ const ToolListingDetail: NextPage = () => {
     await router.push('/tools/mine')
   }
   
-  if (!toolListing && !loading) return <Error statusCode={404} />
+  if (!toolListing && !loading) return <Custom404/>
 
   return (
     <div className="bg-white">
