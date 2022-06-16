@@ -15,7 +15,7 @@ const ListTools: NextPage = () => {
   useEffect(() => {
     const loadListing = async () => {
       const listings = await dispatch(loadToolListings()).unwrap()
-      setToolListings(listings.filter((tool) => tool.status == 'Published'))
+      setToolListings(listings.filter((tool) => tool.status == 'PUBLISHED'))
     }
     loadListing()
   }, [])
@@ -42,7 +42,7 @@ const ListTools: NextPage = () => {
           </div>
           <div className="p-5">
             <div className="font-bold text-xl text-blue-800">{ tool.name }</div> 
-            <p className="text-sm text-gray-500">Precio: ${ tool.price }</p> 
+            <p className="text-sm text-gray-500">Precio: $ { tool.price }</p> 
           </div>
         </div> 
         </Link>

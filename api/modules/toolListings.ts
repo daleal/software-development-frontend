@@ -1,39 +1,47 @@
-import client from '@/api/client'
-import type { ToolListing } from '@/types/entities/toolListing'
+import client from "@/api/client";
+import type { ToolListing } from "@/types/entities/toolListing";
 
 export const listMine = async (): Promise<Array<ToolListing>> => {
-  const response = await client.get('/api/tool-listings/mine');
+  const response = await client.get("/api/tool-listings/mine");
   return response.data;
-}
+};
 
 export const list = async (): Promise<Array<ToolListing>> => {
-  const response = await client.get('/api/tool-listings/')
-  return response.data
-}
+  const response = await client.get("/api/tool-listings/");
+  return response.data;
+};
 
 export const get = async (id: number): Promise<ToolListing> => {
-  const response = await client.get(`/api/tool-listings/${id}/`)
-  return response.data
-}
+  const response = await client.get(`/api/tool-listings/${id}/`);
+  return response.data;
+};
 
 export const create = async (
   name: string,
   description: string,
   price: number,
-  image: string,
+  image: string
 ): Promise<ToolListing> => {
-  const response = await client.post('/api/tool-listings/', {
+  const response = await client.post("/api/tool-listings/", {
     name,
     description,
     price,
-    image ,
-  })
-  return response.data
-}
+    image: { created: null, file: image },
+  });
+  return response.data;
+};
 
-export const remove = async (
-  id: number,
-): Promise<ToolListing> => {
-  const response = await client.delete(`/api/tool-listings/${id}`)
-  return response.data
-}
+export const rent = async (id: number): Promise<ToolListing> => {
+  const response = await client.patch(`/api/tool-listings/${id}/rent/`);
+  return response.data;
+};
+
+export const unrent = async (id: number): Promise<ToolListing> => {
+  const response = await client.patch(`/api/tool-listings/${id}/unrent/`);
+  return response.data;
+};
+
+export const remove = async (id: number): Promise<ToolListing> => {
+  const response = await client.delete(`/api/tool-listings/${id}`);
+  return response.data;
+};

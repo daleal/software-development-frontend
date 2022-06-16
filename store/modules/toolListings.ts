@@ -1,95 +1,132 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import * as api from '@/api'
-import type { ToolListing } from '@/types/entities/toolListing'
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import * as api from "@/api";
+import type { ToolListing } from "@/types/entities/toolListing";
 
 export interface ToolListingsState {
-  loading: boolean
-  listings: Array<ToolListing>
+  loading: boolean;
+  listings: Array<ToolListing>;
 }
 
 const initialState: ToolListingsState = {
   loading: false,
   listings: [],
-}
+};
 
-export const loadMyRentals = createAsyncThunk('pastToolListings/loadMyRentals', async () => {
-  const toolListings = await api.pastToolListings.listMyRentals()
-  return toolListings
-})
+export const loadMyToolListings = createAsyncThunk(
+  "toolListings/loadMine",
+  async () => {
+    const toolListings = await api.toolListings.listMine();
+    return toolListings;
+  }
+);
 
-export const loadMyRentedTools = createAsyncThunk('pastToolListings/loadMine', async () => {
-  const toolListings = await api.pastToolListings.listMine()
-  return toolListings
-})
+export const loadToolListings = createAsyncThunk(
+  "toolListings/load",
+  async () => {
+    const toolListings = await api.toolListings.list();
+    return toolListings;
+  }
+);
 
-export const loadMyToolListings = createAsyncThunk('toolListings/loadMine', async () => {
-  const toolListings = await api.toolListings.listMine()
-  return toolListings
-})
-
-export const loadToolListings = createAsyncThunk('toolListings/load', async () => {
-  const toolListings = await api.toolListings.list()
-  return toolListings
-})
-
-export const loadToolListing = createAsyncThunk('toolListings/loadById', async (id: number) => {
-  const toolListing = await api.toolListings.get(id)
-  return toolListing
-})
+export const loadToolListing = createAsyncThunk(
+  "toolListings/loadById",
+  async (id: number) => {
+    const toolListing = await api.toolListings.get(id);
+    return toolListing;
+  }
+);
 
 export const createToolListing = createAsyncThunk(
-  'toolListings/create',
-  async (config: { name: string, description: string, price: number, image: string }) => {
+  "toolListings/create",
+  async (config: {
+    name: string;
+    description: string;
+    price: number;
+    image: string;
+  }) => {
     const toolListing = await api.toolListings.create(
-      config.name, config.description, config.price, config.image,
-    )
-    return toolListing
+      config.name,
+      config.description,
+      config.price,
+      config.image
+    );
+    return toolListing;
   }
-)
+);
 
 export const removeToolListing = createAsyncThunk(
-  'toolListings/remove',
+  "toolListings/remove",
   async (id: number) => {
-    const toolListing = await api.toolListings.remove(id)
-    return toolListing
+    const toolListing = await api.toolListings.remove(id);
+    return toolListing;
   }
-)
+);
+
+export const rentToolListing = createAsyncThunk(
+  "toolListings/rent",
+  async (id: number) => {
+    const toolListing = await api.toolListings.rent(id);
+    return toolListing;
+  }
+);
+
+export const unrentToolListing = createAsyncThunk(
+  "toolListings/unrent",
+  async (id: number) => {
+    const toolListing = await api.toolListings.unrent(id);
+    return toolListing;
+  }
+);
 
 export const toolListingsSlice = createSlice({
-  name: 'toolListings',
+  name: "toolListings",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     // list
     builder.addCase(loadToolListings.pending, (state) => {
-      state.loading = true
-    })
+      state.loading = true;
+    });
     builder.addCase(loadToolListings.fulfilled, (state, action) => {
-      state.loading = false
-      state.listings = [...action.payload]
-    })
+      state.loading = false;
+      state.listings = [...action.payload];
+    });
     // get
     builder.addCase(loadToolListing.pending, (state) => {
-      state.loading = true
-    })
+      state.loading = true;
+    });
     builder.addCase(loadToolListing.fulfilled, (state) => {
-      state.loading = false
-    })
+      state.loading = false;
+    });
     // create
     builder.addCase(createToolListing.pending, (state) => {
-      state.loading = true
-    })
+      state.loading = true;
+    });
     builder.addCase(createToolListing.fulfilled, (state) => {
-      state.loading = false
-    })
+      state.loading = false;
+    });
     // delete
     builder.addCase(removeToolListing.pending, (state) => {
-      state.loading = true
-    })
+      state.loading = true;
+    });
     builder.addCase(removeToolListing.fulfilled, (state) => {
-      state.loading = false
-    })
-  }
-})
+      state.loading = false;
+    });
+    // rent
+    builder.addCase(rentToolListing.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(rentToolListing.fulfilled, (state) => {
+      state.loading = false;
+    });
+    // unrent
+    builder.addCase(unrentToolListing.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(unrentToolListing.fulfilled, (state) => {
+      state.loading = false;
+    });
+  },
+});
 
-export const toolListingsReducer = toolListingsSlice.reducer
+export const toolListingsReducer = toolListingsSlice.reducer;
