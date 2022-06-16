@@ -48,12 +48,14 @@ export const remove = async (id: number): Promise<ToolListing> => {
   return response.data;
 };
 
+// Tools I've rented
 export const listMyRentals = async (): Promise<PastToolListing> => {
   const response = await client.get(`/api/tool-listings/my-rentals`);
   return response.data;
 };
 
+// Tools I've listed and been rented
 export const listMyRentedTools = async (): Promise<PastToolListing> => {
-  const response = await client.get(`/api/tool-listings/rented-tools`);
+  const response = await client.get(`/api/tool-listings/my-rented-tools`);
   return response.data;
 };

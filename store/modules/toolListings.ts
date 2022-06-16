@@ -78,7 +78,7 @@ export const unrentToolListing = createAsyncThunk(
   }
 );
 
-// Tools I rented
+// Tools I've rented
 export const loadMyRentals = createAsyncThunk(
   "toolListings/loadMyRentals",
   async () => {
