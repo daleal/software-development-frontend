@@ -1,6 +1,7 @@
+import { NextPage } from "next";
 import Link from "next/link";
 
-export default function Custom404() {
+const Custom404 : NextPage = () => {
   return( 
     <div className="flex h-screen">
       <div className="m-auto text-center">
@@ -15,3 +16,5 @@ export default function Custom404() {
     </div>
   )
 }
+
+export default Custom404
