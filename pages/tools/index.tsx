@@ -47,9 +47,11 @@ const ListTools: NextPage = () => {
         </div> 
         </Link>
         )}
-        <button className="m-24 text-2xl bg-blue-800 hover:bg-blue-700 text-base text-white font-bold py-2 px-4 rounded w-20 h-20">
-          +
-        </button>
+        <Link href="/new-listing" passHref>
+          <button className="text-2xl bg-blue-800 hover:bg-blue-700 text-base text-white font-bold py-2 px-4 mx-10 mt-24 rounded w-20 h-20">
+              +
+          </button>
+        </Link>
       </div>
     </div>
       
