@@ -43,7 +43,7 @@ const ToolListingDetail: NextPage = () => {
     await router.push('/tools/mine')
   }
   
-  if (!toolListing) return <Error statusCode={404} />
+  if (!toolListing && !loading) return <Error statusCode={404} />
 
   return (
     <div className="bg-white">
