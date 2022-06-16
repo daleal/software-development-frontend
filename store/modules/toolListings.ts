@@ -78,6 +78,24 @@ export const unrentToolListing = createAsyncThunk(
   }
 );
 
+// Tools I rented
+export const loadMyRentals = createAsyncThunk(
+  "toolListings/loadMyRentals",
+  async () => {
+    const pastToolListings = await api.toolListings.listMyRentals()
+    return pastToolListings
+  }
+);
+
+// Tools I've listed and been rented
+export const loadMyRentedTools = createAsyncThunk(
+  "toolListings/loadMyRentedTools",
+  async () => {
+    const pastToolListings = await api.toolListings.listMyRentedTools()
+    return pastToolListings
+  }
+);
+
 export const toolListingsSlice = createSlice({
   name: "toolListings",
   initialState,
@@ -124,6 +142,27 @@ export const toolListingsSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(unrentToolListing.fulfilled, (state) => {
+      state.loading = false;
+    });
+    // my tools
+    builder.addCase(loadMyToolListings.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(loadMyToolListings.fulfilled, (state) => {
+      state.loading = false;
+    });
+    // my rentals
+    builder.addCase(loadMyRentals.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(loadMyRentals.fulfilled, (state) => {
+      state.loading = false;
+    });
+    // my rented tools
+    builder.addCase(loadMyRentedTools.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(loadMyRentedTools.fulfilled, (state) => {
       state.loading = false;
     });
   },
