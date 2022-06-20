@@ -16,7 +16,7 @@ const ListTools: NextPage = () => {
   useEffect(() => {
     const loadListing = async () => {
       const listings = await dispatch(loadToolListings()).unwrap()
-      setToolListings(listings.filter((tool) => tool.status == Status.Published))
+      setToolListings(listings.filter((tool) => tool.status === Status.Published))
     }
     loadListing()
   }, [])
