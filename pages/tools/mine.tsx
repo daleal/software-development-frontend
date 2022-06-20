@@ -21,7 +21,7 @@ const MyTools: NextPage = () => {
       loadListing()
     }, [dispatch])
 
-    const statusStyle = (status: number) => {
+    const statusStyle = (status: Status) => {
       switch (status) {
         case Status.Rented:
           return "my-4 px-3 py-1 pointer-events-none text-white pointer-events:none bg-green-500 rounded"
@@ -32,7 +32,7 @@ const MyTools: NextPage = () => {
       }
     }
   
-    const statusName = (status: number) => {
+    const statusName = (status: Status) => {
       switch (status) {
         case Status.Rented:
           return "Arrendado"
