@@ -35,7 +35,7 @@ const MyTools: NextPage = () => {
     const statusName = (status: number) => {
       switch (status) {
         case Status.Rented:
-          return "Rentado"
+          return "Arrendado"
         case Status.Unpublished:
           return "No Publicado"
         default:
