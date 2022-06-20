@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from '@/store'
 import type { ToolListing } from '@/types/entities/toolListing'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Status } from '@/types/api/status'
 
 const ListTools: NextPage = () => {
   const dispatch = useDispatch()
@@ -15,7 +16,7 @@ const ListTools: NextPage = () => {
   useEffect(() => {
     const loadListing = async () => {
       const listings = await dispatch(loadToolListings()).unwrap()
-      setToolListings(listings.filter((tool) => tool.status == 'Published'))
+      setToolListings(listings.filter((tool) => tool.status == Status.Published))
     }
     loadListing()
   }, [])

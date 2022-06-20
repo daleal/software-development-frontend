@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from '@/store'
 import type { ToolListing } from '@/types/entities/toolListing'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Status } from '@/types/api/status'
 
 const MyTools: NextPage = () => {
     const dispatch = useDispatch()
@@ -20,22 +21,22 @@ const MyTools: NextPage = () => {
       loadListing()
     }, [dispatch])
 
-    const statusStyle = (status: string) => {
+    const statusStyle = (status: number) => {
       switch (status) {
-        case 'Rented':
+        case Status.Rented:
           return "my-4 px-3 py-1 pointer-events-none text-white pointer-events:none bg-green-500 rounded"
-        case 'Unpublished':
+        case Status.Unpublished:
           return "my-4 px-3 py-1 pointer-events-none text-white pointer-events:none bg-red-500 rounded"
         default:
           return "my-4 px-3 py-1 pointer-events-none text-white pointer-events:none bg-blue-500 rounded"
       }
     }
   
-    const statusName = (status: string) => {
+    const statusName = (status: number) => {
       switch (status) {
-        case 'Rented':
+        case Status.Rented:
           return "Rentado"
-        case 'Unpublished':
+        case Status.Unpublished:
           return "No Publicado"
         default:
           return "Disponible"

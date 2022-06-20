@@ -4,5 +4,5 @@ export interface ToolListing {
   publisher: number
   image: string
   price: number
-  status: string
+  status: number
 }
