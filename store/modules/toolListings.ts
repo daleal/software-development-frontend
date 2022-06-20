@@ -82,8 +82,8 @@ export const unrentToolListing = createAsyncThunk(
 export const loadMyRentals = createAsyncThunk(
   "toolListings/loadMyRentals",
   async () => {
-    const pastToolListings = await api.toolListings.listMyRentals()
-    return pastToolListings
+    const toolListings = await api.toolListings.listMyRentals()
+    return toolListings
   }
 );
 
@@ -91,8 +91,8 @@ export const loadMyRentals = createAsyncThunk(
 export const loadMyRentedTools = createAsyncThunk(
   "toolListings/loadMyRentedTools",
   async () => {
-    const pastToolListings = await api.toolListings.listMyRentedTools()
-    return pastToolListings
+    const toolListings = await api.toolListings.listMyRentedTools()
+    return toolListings
   }
 );
 
