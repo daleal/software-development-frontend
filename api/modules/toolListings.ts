@@ -20,16 +20,16 @@ export const create = async (
   name: string,
   description: string,
   price: number,
-  image: string
+  image: string,
 ): Promise<ToolListing> => {
-  const response = await client.post("/api/tool-listings/", {
+  const response = await client.post('/api/tool-listings/', {
     name,
     description,
     price,
-    image: { created: null, file: image },
-  });
-  return response.data;
-};
+    image,
+  })
+  return response.data
+}
 
 export const rent = async (id: number): Promise<ToolListing> => {
   const response = await client.patch(`/api/tool-listings/${id}/rent/`);
