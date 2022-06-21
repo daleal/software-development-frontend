@@ -31,7 +31,7 @@ export const createToolListing = createAsyncThunk(
   'toolListings/create',
   async (config: { name: string, description: string, price: number | undefined, image: string }) => {
     const toolListing = await api.toolListings.create(
-      config.name, config.description, config.price, config.image,
+      config.name, config.description, config.image, config.price,
     )
     return toolListing
   }

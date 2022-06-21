@@ -81,8 +81,8 @@ const NewListing: NextPage = () => {
       const created = await dispatch(createToolListing({
         name: title,
         description,
-        price,
         image: selectedImageBase64,
+        price,
       })).unwrap()
     } else {
       setImageError('Debes incluir una imagen en la publicación.')
