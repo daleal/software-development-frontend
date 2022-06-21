@@ -19,7 +19,7 @@ const ListTools: NextPage = () => {
       setToolListings(listings.filter((tool) => tool.status === Status.Published))
     }
     loadListing()
-  }, [])
+  }, [dispatch])
 
   return <div>
 

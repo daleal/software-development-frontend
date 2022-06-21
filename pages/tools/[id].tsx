@@ -38,15 +38,6 @@ const ToolListingDetail: NextPage = () => {
     getUserId()
   }, [toolListing])
 
-  useEffect(() => {
-    const checkStatus = (async () => {
-      if (toolListing) {
-        setIsRented(toolListing.status == '2' || toolListing.status == 'Rented')
-      }
-    })
-    checkStatus()
-  }, [toolListing])
-
   const deleteTool = async () => {
     await dispatch(removeToolListing(id))
     await router.push('/tools/mine')
