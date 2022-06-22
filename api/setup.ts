@@ -18,10 +18,12 @@ export const setupAPIAuthInterceptors = (getToken: () => Promise<Nullable<string
     return config
   })
 
-  client.interceptors.response.use(async (error)=> {
-    if(error.status === 401) {
+  client.interceptors.response.use(
+    response => response,
+    async (error)=> {
+    if (error.response.status === 401 && error.config.url !== '/auth/jwt/create/') {
       await logout()
     }
-    return error
+    return Promise.reject(error)
   })
 }

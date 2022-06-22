@@ -29,9 +29,9 @@ export const loadToolListing = createAsyncThunk('toolListings/loadById', async (
 
 export const createToolListing = createAsyncThunk(
   'toolListings/create',
-  async (config: { name: string, description: string, price: number, image: string }) => {
+  async (config: { name: string, description: string, price: number | undefined, image: string }) => {
     const toolListing = await api.toolListings.create(
-      config.name, config.description, config.price, config.image,
+      config.name, config.description, config.image, config.price,
     )
     return toolListing
   }
@@ -63,6 +63,9 @@ export const toolListingsSlice = createSlice({
       state.loading = true
     })
     builder.addCase(loadToolListing.fulfilled, (state) => {
+      state.loading = false
+    })
+    builder.addCase(loadToolListing.rejected, (state) => {
       state.loading = false
     })
     // create

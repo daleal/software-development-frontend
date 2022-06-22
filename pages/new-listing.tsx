@@ -12,11 +12,13 @@ const NewListing: NextPage = () => {
   const dispatch = useDispatch()
   const [selectedImage, setSelectedImage] = useState<Blob>()
   const [selectedImageBase64, setSelectedImageBase64] = useState<Nullable<string>>(null)
-  const [rejectionError, setRejectionError] = useState<FileRejection>()
+  const [imageError, setImageError] = useState('')
 
   const onDrop = (acceptedFiles: Blob[], fileRejections: FileRejection[]) => {
     setSelectedImage(acceptedFiles[0])
-    setRejectionError(fileRejections[0])
+    if (!!fileRejections[0]?.errors?.[0].message) {
+      setImageError('No es una imagen válida, por favor sube otra imagen.')
+    }
   }
   const previewImage = useMemo(() => {
     if (selectedImage) {
@@ -71,7 +73,7 @@ const NewListing: NextPage = () => {
 
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [price, setPrice] = useState(0)
+  const [price, setPrice] = useState<undefined | number>(undefined)
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -79,10 +81,11 @@ const NewListing: NextPage = () => {
       const created = await dispatch(createToolListing({
         name: title,
         description,
-        price,
         image: selectedImageBase64,
+        price,
       })).unwrap()
-
+    } else {
+      setImageError('Debes incluir una imagen en la publicación.')
     }
   }
 
@@ -118,6 +121,7 @@ const NewListing: NextPage = () => {
                   className="block w-full max-w-lg border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
+                  required
                 />
               </div>
             </div>
@@ -135,7 +139,9 @@ const NewListing: NextPage = () => {
                   id="price"
                   className="block w-full max-w-lg border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm"
                   value={price}
-                  onChange={(e) => Number(e.target.value) < 0 ? setPrice(0) : setPrice(Number(e.target.value))}
+                  onChange={(e) => e.target.value ? Number(e.target.value) < 0 ?
+                     setPrice(0) : setPrice(Number(e.target.value)) : setPrice(undefined)}
+                  required
                 />
               </div>
             </div>
@@ -154,6 +160,7 @@ const NewListing: NextPage = () => {
                   className="block w-full max-w-lg border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   onChange={(e) => setDescription(e.target.value)}
                   value={description}
+                  required
                 />
                 <p className="mt-2 text-sm text-gray-500">
                   Cuéntanos un poco de la herramienta que quieres arrendar.
@@ -219,11 +226,12 @@ const NewListing: NextPage = () => {
                     <p className="text-xs text-gray-500">PNG, JPG hasta 10MB</p>
                   </div>
                 </div>
-                {rejectionError?.errors?.[0].message && (
+                {
+                  imageError &&
                   <p className="mt-2 text-sm text-red-500">
-                    No es una imagen válida, por favor sube otra imagen
+                    {imageError}
                   </p>
-                )}
+                }
               </div>
             </div>
           </div>

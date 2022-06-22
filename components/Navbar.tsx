@@ -30,12 +30,12 @@ export default function Navbar() {
           { !loggedIn && <>
             <Link href="/login">
               <a className="font-medium text-blue-800 hover:text-blue-800">
-                Log in
+                Iniciar sesión
               </a>
             </Link>
             <Link href="/signup">
               <a className="font-medium text-blue-800 hover:text-blue-800">
-                Sign up
+                Crear cuenta
               </a>
             </Link>
           </> }

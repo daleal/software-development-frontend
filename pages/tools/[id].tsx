@@ -9,6 +9,7 @@ import { loadToolListing, removeToolListing } from '@/store/modules/toolListings
 import type { Nullable } from '@/types/common'
 import type { ToolListing } from '@/types/entities/toolListing'
 import Image from 'next/image'
+import Custom404 from '../404'
 
 
 const ToolListingDetail: NextPage = () => {
@@ -41,6 +42,8 @@ const ToolListingDetail: NextPage = () => {
     await dispatch(removeToolListing(id))
     await router.push('/tools/mine')
   }
+  
+  if (!toolListing && !loading) return <Custom404/>
 
   return (
     <div className="bg-white">
@@ -50,8 +53,7 @@ const ToolListingDetail: NextPage = () => {
             {loading
               ? <p>Loading</p>
               : 
-              toolListing ?
-              ( 
+                  toolListing?
                 <>
                 <div className="lg:col-start-1 lg:col-span-2">
                   <div className="flex justify-between">
@@ -77,11 +79,9 @@ const ToolListingDetail: NextPage = () => {
                     : <></>
                   }
                 </div>
-                
                 </>
-              )
-              :
-              <p>No se ha encontrado la herramienta.</p>
+                :
+                <p>Ha ocurrido un error</p>
             }
           </div>
         </div>
