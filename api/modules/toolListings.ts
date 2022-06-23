@@ -1,6 +1,6 @@
-import client from "@/api/client";
-import type { ToolListing } from "@/types/entities/toolListing";
-import type { PastToolListing } from "@/types/entities/pastToolListing";
+import client from '@/api/client'
+import type { ToolListing } from '@/types/entities/toolListing'
+import type { PastToolListing } from '@/types/entities/pastToolListing'
 
 export const listMine = async (): Promise<Array<ToolListing>> => {
   const response = await client.get('/api/tool-listings/mine')
@@ -8,14 +8,14 @@ export const listMine = async (): Promise<Array<ToolListing>> => {
 }
 
 export const list = async (): Promise<Array<ToolListing>> => {
-  const response = await client.get("/api/tool-listings/");
-  return response.data;
-};
+  const response = await client.get("/api/tool-listings/")
+  return response.data
+}
 
 export const get = async (id: number): Promise<ToolListing> => {
-  const response = await client.get(`/api/tool-listings/${id}/`);
-  return response.data;
-};
+  const response = await client.get(`/api/tool-listings/${id}/`)
+  return response.data
+}
 
 export const create = async (
   name: string,
@@ -50,7 +50,7 @@ export const remove = async (id: number): Promise<ToolListing> => {
 // Tools I've rented
 export const listMyRentals = async (): Promise<Array<PastToolListing>> => {
   const response = await client.get(`/api/tool-listings/my-rentals`)
-  return response.data;
+  return response.data
 }
 
 // Tools I've listed and been rented
