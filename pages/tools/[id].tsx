@@ -9,6 +9,8 @@ import { loadToolListing, removeToolListing, rentToolListing, unrentToolListing 
 import type { Nullable } from '@/types/common'
 import type { ToolListing } from '@/types/entities/toolListing'
 import Image from 'next/image'
+import { Status } from '@/types/api/status'
+import Custom404 from '../404'
 
 
 const ToolListingDetail: NextPage = () => {
@@ -38,8 +40,31 @@ const ToolListingDetail: NextPage = () => {
     getUserId()
   }, [toolListing])
 
+  useEffect(() => {
+    const checkStatus = (async () => {
+      if (toolListing) {
+        setIsRented(toolListing.status == Status.Rented)
+      }
+    })
+    checkStatus()
+  }, [toolListing])
+
   const deleteTool = async () => {
     await dispatch(removeToolListing(id))
+    await router.push('/tools/mine')
+  }
+  
+  if (!toolListing && !loading) return <Custom404/>
+
+  const rentTool = async () => {
+    await dispatch(rentToolListing(id))
+    window.alert('Successfully rented!')
+    await router.push('/tools/')
+  }
+
+  const unrentTool = async () => {
+    await dispatch(unrentToolListing(id))
+    window.alert('Successfully republished tool!')
     await router.push('/tools/mine')
   }
 
@@ -63,8 +88,7 @@ const ToolListingDetail: NextPage = () => {
             {loading
               ? <p>Loading</p>
               : 
-              toolListing ?
-              ( 
+                  toolListing?
                 <>
                 <div className="lg:col-start-1 lg:col-span-2">
                   <div className="flex justify-between">
@@ -78,7 +102,7 @@ const ToolListingDetail: NextPage = () => {
                         <h2 className="font-bold text-yellow-400 xl"> $ {toolListing.price} </h2>
                         <p className="text-sm text-gray-500"> Para arrendar esta herramienta por favor
                         contáctate directamente con el arrendador. </p>
-                        <p className="text-sm text-gray-500"> Número de contacto:  </p>
+                        <p className="text-sm text-gray-500"> Número de contacto: {toolListing.phoneNumber} </p>
                       </div>
                   </div>
                   { isPublisher ?
@@ -113,11 +137,9 @@ const ToolListingDetail: NextPage = () => {
                       : <></>
                   }
                 </div>
-                
                 </>
-              )
-              :
-              <p>No se ha encontrado la herramienta.</p>
+                :
+                <p>Ha ocurrido un error</p>
             }
           </div>
         </div>
@@ -127,4 +149,4 @@ const ToolListingDetail: NextPage = () => {
 }
 
 
-export default ToolListingDetail;
+export default ToolListingDetail

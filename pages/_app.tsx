@@ -3,14 +3,14 @@ import { Provider } from 'react-redux'
 import { useSession } from '@/hooks/session'
 import { store } from '@/store'
 import { setupAPIAuthInterceptors } from '@/api/setup'
-import WithNavbar from '@/components/layouts/WithNavbar';
+import WithNavbar from '@/components/layouts/WithNavbar'
 import { RequireLoggedIn } from '@/components/guards/RequireLoggedIn'
 import '@/styles/globals.css'
 
 function MyApp(appProps: AppProps) {
   const { getToken, logout } = useSession()
 
-  setupAPIAuthInterceptors(getToken, logout);
+  setupAPIAuthInterceptors(getToken, logout)
 
   return <>
     <Provider store={store}>
@@ -21,4 +21,4 @@ function MyApp(appProps: AppProps) {
   </>
 }
 
-export default MyApp;
+export default MyApp

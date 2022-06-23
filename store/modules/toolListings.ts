@@ -13,44 +13,44 @@ const initialState: ToolListingsState = {
 };
 
 export const loadMyToolListings = createAsyncThunk(
-  "toolListings/loadMine",
+  'toolListings/loadMine',
   async () => {
-    const toolListings = await api.toolListings.listMine();
-    return toolListings;
+    const toolListings = await api.toolListings.listMine()
+    return toolListings
   }
-);
+)
 
 export const loadToolListings = createAsyncThunk(
-  "toolListings/load",
+  'toolListings/load',
   async () => {
-    const toolListings = await api.toolListings.list();
-    return toolListings;
+    const toolListings = await api.toolListings.list()
+    return toolListings
   }
-);
+)
 
 export const loadToolListing = createAsyncThunk(
-  "toolListings/loadById",
+  'toolListings/loadById',
   async (id: number) => {
-    const toolListing = await api.toolListings.get(id);
-    return toolListing;
+    const toolListing = await api.toolListings.get(id)
+    return toolListing
   }
-);
+)
 
 export const createToolListing = createAsyncThunk(
-  "toolListings/create",
+  'toolListings/create',
   async (config: {
     name: string;
     description: string;
-    price: number;
+    price: number | undefined;
     image: string;
   }) => {
     const toolListing = await api.toolListings.create(
       config.name,
       config.description,
-      config.price,
-      config.image
-    );
-    return toolListing;
+      config.image,
+      config.price
+    )
+    return toolListing
   }
 );
 
@@ -96,6 +96,22 @@ export const loadMyRentedTools = createAsyncThunk(
   }
 );
 
+export const rentToolListing = createAsyncThunk(
+  'toolListings/rent',
+  async (id: number) => {
+    const toolListing = await api.toolListings.rent(id)
+    return toolListing
+  }
+)
+
+export const unrentToolListing = createAsyncThunk(
+  'toolListings/unrent',
+  async (id: number) => {
+    const toolListing = await api.toolListings.unrent(id)
+    return toolListing
+  }
+)
+
 export const toolListingsSlice = createSlice({
   name: "toolListings",
   initialState,
@@ -103,69 +119,72 @@ export const toolListingsSlice = createSlice({
   extraReducers: (builder) => {
     // list
     builder.addCase(loadToolListings.pending, (state) => {
-      state.loading = true;
-    });
+      state.loading = true
+    })
     builder.addCase(loadToolListings.fulfilled, (state, action) => {
-      state.loading = false;
-      state.listings = [...action.payload];
-    });
+      state.loading = false
+      state.listings = [...action.payload]
+    })
     // get
     builder.addCase(loadToolListing.pending, (state) => {
-      state.loading = true;
+      state.loading = true
     });
     builder.addCase(loadToolListing.fulfilled, (state) => {
-      state.loading = false;
-    });
+      state.loading = false
+    })
+    builder.addCase(loadToolListing.rejected, (state) => {
+      state.loading = false
+    })
     // create
     builder.addCase(createToolListing.pending, (state) => {
-      state.loading = true;
-    });
+      state.loading = true
+    })
     builder.addCase(createToolListing.fulfilled, (state) => {
-      state.loading = false;
-    });
+      state.loading = false
+    })
     // delete
     builder.addCase(removeToolListing.pending, (state) => {
-      state.loading = true;
-    });
+      state.loading = true
+    })
     builder.addCase(removeToolListing.fulfilled, (state) => {
-      state.loading = false;
-    });
+      state.loading = false
+    })
     // rent
     builder.addCase(rentToolListing.pending, (state) => {
-      state.loading = true;
-    });
+      state.loading = true
+    })
     builder.addCase(rentToolListing.fulfilled, (state) => {
-      state.loading = false;
-    });
+      state.loading = false
+    })
     // unrent
     builder.addCase(unrentToolListing.pending, (state) => {
-      state.loading = true;
-    });
+      state.loading = true
+    })
     builder.addCase(unrentToolListing.fulfilled, (state) => {
-      state.loading = false;
-    });
+      state.loading = false
+    })
     // my tools
     builder.addCase(loadMyToolListings.pending, (state) => {
-      state.loading = true;
-    });
+      state.loading = true
+    })
     builder.addCase(loadMyToolListings.fulfilled, (state) => {
-      state.loading = false;
-    });
+      state.loading = false
+    })
     // my rentals
     builder.addCase(loadMyRentals.pending, (state) => {
-      state.loading = true;
-    });
+      state.loading = true
+    })
     builder.addCase(loadMyRentals.fulfilled, (state) => {
-      state.loading = false;
-    });
+      state.loading = false
+    })
     // my rented tools
     builder.addCase(loadMyRentedTools.pending, (state) => {
-      state.loading = true;
-    });
+      state.loading = true
+    })
     builder.addCase(loadMyRentedTools.fulfilled, (state) => {
-      state.loading = false;
-    });
+      state.loading = false
+    })
   },
-});
+})
 
-export const toolListingsReducer = toolListingsSlice.reducer;
+export const toolListingsReducer = toolListingsSlice.reducer

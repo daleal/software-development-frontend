@@ -1,5 +1,5 @@
-import type { NextPage } from "next";
-import Image from "next/image";
+import type { NextPage } from 'next'
+import Image from 'next/image'
 
 // Reference: https://tailwindui.com/components/marketing/sections/heroes
 const Home: NextPage = () => {
@@ -10,7 +10,7 @@ const Home: NextPage = () => {
           <main className="px-4 mx-auto mt-10 max-w-7xl sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
             <div className="sm:text-center lg:text-left">
               <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
-                <span className="block text-blue-800 xl">Rentool</span>{" "}
+                <span className="block text-blue-800 xl">Rentool</span>{' '}
                 <span className="block text-yellow-400 xl">
                   El Uber de las herramientas
                 </span>
@@ -34,7 +34,7 @@ const Home: NextPage = () => {
         />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
