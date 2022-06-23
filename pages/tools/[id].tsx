@@ -53,8 +53,9 @@ const ToolListingDetail: NextPage = () => {
     await dispatch(removeToolListing(id))
     await router.push('/tools/mine')
   }
-  
+
   if (!toolListing && !loading) return <Custom404/>
+
 
   const rentTool = async () => {
     await dispatch(rentToolListing(id))
@@ -75,7 +76,7 @@ const ToolListingDetail: NextPage = () => {
           <div className="lg:grid lg:grid-cols-4 lg:auto-rows-min lg:gap-x-8">
             {loading
               ? <p>Loading</p>
-              : 
+              :
                   toolListing?
                 <>
                 <div className="lg:col-start-1 lg:col-span-2">
@@ -112,8 +113,8 @@ const ToolListingDetail: NextPage = () => {
                             Eliminar herramienta
                           </button>
                         </div>
-                    : 
-                      !isRented ? 
+                    :
+                      !isRented ?
                         <div className="flex justify-center w-100">
                           <button
                             className="my-4 px-3 py-1 text-white bg-blue-500 rounded"

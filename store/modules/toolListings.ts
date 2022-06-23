@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import * as api from '@/api'
-import type { ToolListing } from '@/types/entities/toolListing'
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import * as api from "@/api";
+import type { ToolListing } from "@/types/entities/toolListing";
 
 export interface ToolListingsState {
   loading: boolean;
@@ -10,7 +10,7 @@ export interface ToolListingsState {
 const initialState: ToolListingsState = {
   loading: false,
   listings: [],
-}
+};
 
 export const loadMyToolListings = createAsyncThunk(
   'toolListings/loadMine',
@@ -52,15 +52,34 @@ export const createToolListing = createAsyncThunk(
     )
     return toolListing
   }
-)
+);
 
 export const removeToolListing = createAsyncThunk(
-  'toolListings/remove',
+  "toolListings/remove",
   async (id: number) => {
-    const toolListing = await api.toolListings.remove(id)
-    return toolListing
+    const toolListing = await api.toolListings.remove(id);
+    return toolListing;
   }
-)
+);
+
+
+// Tools I've rented
+export const loadMyRentals = createAsyncThunk(
+  "toolListings/loadMyRentals",
+  async () => {
+    const toolListings = await api.toolListings.listMyRentals()
+    return toolListings
+  }
+);
+
+// Tools I've listed and been rented
+export const loadMyRentedTools = createAsyncThunk(
+  "toolListings/loadMyRentedTools",
+  async () => {
+    const toolListings = await api.toolListings.listMyRentedTools()
+    return toolListings
+  }
+);
 
 export const rentToolListing = createAsyncThunk(
   'toolListings/rent',
@@ -79,7 +98,7 @@ export const unrentToolListing = createAsyncThunk(
 )
 
 export const toolListingsSlice = createSlice({
-  name: 'toolListings',
+  name: "toolListings",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -94,7 +113,7 @@ export const toolListingsSlice = createSlice({
     // get
     builder.addCase(loadToolListing.pending, (state) => {
       state.loading = true
-    })
+    });
     builder.addCase(loadToolListing.fulfilled, (state) => {
       state.loading = false
     })
@@ -127,6 +146,27 @@ export const toolListingsSlice = createSlice({
       state.loading = true
     })
     builder.addCase(unrentToolListing.fulfilled, (state) => {
+      state.loading = false
+    })
+    // my tools
+    builder.addCase(loadMyToolListings.pending, (state) => {
+      state.loading = true
+    })
+    builder.addCase(loadMyToolListings.fulfilled, (state) => {
+      state.loading = false
+    })
+    // my rentals
+    builder.addCase(loadMyRentals.pending, (state) => {
+      state.loading = true
+    })
+    builder.addCase(loadMyRentals.fulfilled, (state) => {
+      state.loading = false
+    })
+    // my rented tools
+    builder.addCase(loadMyRentedTools.pending, (state) => {
+      state.loading = true
+    })
+    builder.addCase(loadMyRentedTools.fulfilled, (state) => {
       state.loading = false
     })
   },

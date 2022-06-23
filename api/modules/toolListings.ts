@@ -1,5 +1,6 @@
 import client from '@/api/client'
 import type { ToolListing } from '@/types/entities/toolListing'
+import type { PastToolListing } from '@/types/entities/pastToolListing'
 
 export const listMine = async (): Promise<Array<ToolListing>> => {
   const response = await client.get('/api/tool-listings/mine')
@@ -7,7 +8,7 @@ export const listMine = async (): Promise<Array<ToolListing>> => {
 }
 
 export const list = async (): Promise<Array<ToolListing>> => {
-  const response = await client.get('/api/tool-listings/')
+  const response = await client.get("/api/tool-listings/")
   return response.data
 }
 
@@ -43,5 +44,17 @@ export const unrent = async (id: number): Promise<ToolListing> => {
 
 export const remove = async (id: number): Promise<ToolListing> => {
   const response = await client.delete(`/api/tool-listings/${id}`)
+  return response.data
+}
+
+// Tools I've rented
+export const listMyRentals = async (): Promise<Array<PastToolListing>> => {
+  const response = await client.get(`/api/tool-listings/my-rentals`)
+  return response.data
+}
+
+// Tools I've listed and been rented
+export const listMyRentedTools = async (): Promise<Array<PastToolListing>> => {
+  const response = await client.get(`/api/tool-listings/my-rented-tools`)
   return response.data
 }

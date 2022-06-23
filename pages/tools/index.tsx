@@ -19,7 +19,7 @@ const ListTools: NextPage = () => {
       setToolListings(listings.filter((tool) => tool.status === Status.Published))
     }
     loadListing()
-  }, [])
+  }, [dispatch])
 
   return <div>
 
@@ -48,9 +48,6 @@ const ListTools: NextPage = () => {
         </div> 
         </Link>
         )}
-        <button className="m-24 text-2xl bg-blue-800 hover:bg-blue-700 text-base text-white font-bold py-2 px-4 rounded w-20 h-20">
-          +
-        </button>
       </div>
     </div>
       
