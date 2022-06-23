@@ -88,7 +88,7 @@ const ToolListingDetail: NextPage = () => {
                         <h2 className="font-bold text-yellow-400 xl"> $ {toolListing.price} </h2>
                         <p className="text-sm text-gray-500"> Para arrendar esta herramienta por favor
                         contáctate directamente con el arrendador. </p>
-                        <p className="text-sm text-gray-500"> Número de contacto:  </p>
+                        <p className="text-sm text-gray-500"> Número de contacto: {toolListing.phoneNumber} </p>
                       </div>
                   </div>
                   { isPublisher ?
