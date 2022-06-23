@@ -47,8 +47,8 @@ export const createToolListing = createAsyncThunk(
     const toolListing = await api.toolListings.create(
       config.name,
       config.description,
-      config.price,
-      config.image
+      config.image,
+      config.price
     )
     return toolListing
   }
