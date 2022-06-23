@@ -32,7 +32,7 @@ export const RequireLoggedIn = ({ Component, pageProps }: AppProps) => {
       setLoading(false)
     }
     if (typeof window !== 'undefined') checkUserLoggedIn()
-  }, [Component]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [Component]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) {
     return <div>Loading...</div>

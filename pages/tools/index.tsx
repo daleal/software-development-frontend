@@ -43,7 +43,7 @@ const ListTools: NextPage = () => {
           </div>
           <div className="p-5">
             <div className="font-bold text-xl text-blue-800">{ tool.name }</div> 
-            <p className="text-sm text-gray-500">Precio: ${ tool.price }</p> 
+            <p className="text-sm text-gray-500">Precio: $ { tool.price }</p> 
           </div>
         </div> 
         </Link>
