@@ -1,5 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image'
+import Link from 'next/link'
 import { useSession } from '@/hooks/session'
 
 export default function Navbar() {
@@ -65,5 +65,5 @@ export default function Navbar() {
         </div>
       </nav>
     </div>
-  );
+  )
 }

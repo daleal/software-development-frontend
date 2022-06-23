@@ -24,22 +24,22 @@ const MyTools: NextPage = () => {
     const statusStyle = (status: Status) => {
       switch (status) {
         case Status.Rented:
-          return "my-4 px-3 py-1 pointer-events-none text-white pointer-events:none bg-green-500 rounded"
+          return 'my-4 px-3 py-1 pointer-events-none text-white pointer-events:none bg-green-500 rounded'
         case Status.Unpublished:
-          return "my-4 px-3 py-1 pointer-events-none text-white pointer-events:none bg-red-500 rounded"
+          return 'my-4 px-3 py-1 pointer-events-none text-white pointer-events:none bg-red-500 rounded'
         default:
-          return "my-4 px-3 py-1 pointer-events-none text-white pointer-events:none bg-blue-500 rounded"
+          return 'my-4 px-3 py-1 pointer-events-none text-white pointer-events:none bg-blue-500 rounded'
       }
     }
   
     const statusName = (status: Status) => {
       switch (status) {
         case Status.Rented:
-          return "Arrendado"
+          return 'Arrendado'
         case Status.Unpublished:
-          return "No Publicado"
+          return 'No Publicado'
         default:
-          return "Disponible"
+          return 'Disponible'
       }
     }
 
