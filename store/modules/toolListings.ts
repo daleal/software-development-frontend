@@ -62,21 +62,6 @@ export const removeToolListing = createAsyncThunk(
   }
 );
 
-export const rentToolListing = createAsyncThunk(
-  "toolListings/rent",
-  async (id: number) => {
-    const toolListing = await api.toolListings.rent(id);
-    return toolListing;
-  }
-);
-
-export const unrentToolListing = createAsyncThunk(
-  "toolListings/unrent",
-  async (id: number) => {
-    const toolListing = await api.toolListings.unrent(id);
-    return toolListing;
-  }
-);
 
 // Tools I've rented
 export const loadMyRentals = createAsyncThunk(
