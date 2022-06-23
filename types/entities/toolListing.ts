@@ -1,4 +1,4 @@
-import { Status } from "../api/status";
+import { Status } from '../api/status'
 
 export interface ToolListing {
   id: number;

@@ -1,8 +1,8 @@
-import Image from "next/image";
-import Link from "next/link";
-import { Fragment } from "react";
-import { Popover, Transition } from "@headlessui/react";
-import { MenuIcon, XIcon } from "@heroicons/react/outline";
+import Image from 'next/image'
+import Link from 'next/link'
+import { Fragment } from 'react'
+import { Popover, Transition } from '@headlessui/react'
+import { MenuIcon, XIcon } from '@heroicons/react/outline'
 
 export default function Navbar() {
   return (
@@ -112,5 +112,5 @@ export default function Navbar() {
         </Popover.Panel>
       </Transition>
     </Popover>
-  );
+  )
 }

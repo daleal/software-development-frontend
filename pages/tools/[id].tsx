@@ -137,4 +137,4 @@ const ToolListingDetail: NextPage = () => {
 }
 
 
-export default ToolListingDetail;
+export default ToolListingDetail
