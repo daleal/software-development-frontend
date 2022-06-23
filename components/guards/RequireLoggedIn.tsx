@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import { useSession } from '@/hooks/session'
+import { MoonLoader } from 'react-spinners'
+
 
 const AUTH_PATHS = ['/login', '/signup']
 const OPEN_PATHS = ['/']
@@ -35,7 +37,7 @@ export const RequireLoggedIn = ({ Component, pageProps }: AppProps) => {
   }, [Component]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) {
-    return <div>Loading...</div>
+    return <MoonLoader loading={loading} color={'#1e40af'} />
   }
 
   return <Component {...pageProps} />

@@ -6,6 +6,7 @@ import type { ToolListing } from '@/types/entities/toolListing'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Status } from '@/types/api/status'
+import { BarLoader } from 'react-spinners'
 
 const ListTools: NextPage = () => {
   const dispatch = useDispatch()
@@ -28,9 +29,9 @@ const ListTools: NextPage = () => {
         Herramientas
       </div>
       <div className="grid grid-cols-4 gap-8 m-10">
-        { loading? 
-          <>loading...</>
-          : 
+        { loading?
+          <BarLoader loading color='#1e40af' />
+          :
         toolListings.map((tool: ToolListing) =>
         <Link key={tool.id} href="/tools/[id]"  as={`/tools/${tool.id}`} passHref>
         <div  className="max-w-sm rounded overflow-hidden shadow-lg">
@@ -42,17 +43,17 @@ const ListTools: NextPage = () => {
             src={tool.image} />
           </div>
           <div className="p-5">
-            <div className="font-bold text-xl text-blue-800">{ tool.name }</div> 
-            <p className="text-sm text-gray-500">Precio: $ { tool.price }</p> 
+            <div className="font-bold text-xl text-blue-800">{ tool.name }</div>
+            <p className="text-sm text-gray-500">Precio: $ { tool.price }</p>
           </div>
-        </div> 
+        </div>
         </Link>
         )}
       </div>
     </div>
-      
+
     </div>
-  
+
 }
 
 export default ListTools

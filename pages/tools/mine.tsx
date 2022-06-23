@@ -6,6 +6,7 @@ import type { ToolListing } from '@/types/entities/toolListing'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Status } from '@/types/api/status'
+import { BarLoader } from 'react-spinners'
 
 const MyTools: NextPage = () => {
     const dispatch = useDispatch()
@@ -31,7 +32,7 @@ const MyTools: NextPage = () => {
           return 'my-4 px-3 py-1 pointer-events-none text-white pointer-events:none bg-blue-500 rounded'
       }
     }
-  
+
     const statusName = (status: Status) => {
       switch (status) {
         case Status.Rented:
@@ -44,14 +45,15 @@ const MyTools: NextPage = () => {
     }
 
 
-  return ( 
+  return (
     <div>
       <div className=" m-24 bg-white shadow overflow-hidden sm:rounded-md text-center">
         <div className="text-blue-800 font-bold text-2xl mb-2 m-10">
           Mis Herramientas
         </div>
+
         <div className="grid grid-cols-4 gap-8 m-10">
-          { loading ? <>loading...</> : toolListings.map((tool: ToolListing) =>
+          { loading ? <BarLoader loading color='#1e40af' /> : toolListings.map((tool: ToolListing) =>
             <Link key={tool.id} href="/tools/[id]"  as={`/tools/${tool.id}`} passHref>
               <div  className="max-w-sm rounded overflow-hidden shadow-lg">
                 <div className='relative w-full h-44'>
@@ -63,10 +65,10 @@ const MyTools: NextPage = () => {
                 </div>
                 <div className="p-5">
                   <div className="font-bold text-xl text-blue-800">{ tool.name }</div>
-                  <p className="text-sm text-gray-500">Precio: ${ tool.price }</p> 
+                  <p className="text-sm text-gray-500">Precio: ${ tool.price }</p>
                 </div>
                 <button className={ statusStyle(tool.status) }>{ statusName(tool.status) }</button>
-              </div> 
+              </div>
             </Link>
           )}
           <Link href="/new-listing" passHref>
