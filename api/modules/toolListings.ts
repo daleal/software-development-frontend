@@ -19,14 +19,14 @@ export const get = async (id: number): Promise<ToolListing> => {
 export const create = async (
   name: string,
   description: string,
-  price: number,
-  image: string
+  image: string,
+  price?: number,
 ): Promise<ToolListing> => {
   const response = await client.post('/api/tool-listings/', {
     name,
     description,
-    price,
     image,
+    price,
   })
   return response.data
 }
