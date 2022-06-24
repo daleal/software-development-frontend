@@ -1,6 +1,7 @@
 import client from '@/api/client'
 import type { ToolListing } from '@/types/entities/toolListing'
 import type { PastToolListing } from '@/types/entities/pastToolListing'
+import type { Review } from '@/types/entities/review'
 
 export const listMine = async (): Promise<Array<ToolListing>> => {
   const response = await client.get('/api/tool-listings/mine')
@@ -56,5 +57,23 @@ export const listMyRentals = async (): Promise<Array<PastToolListing>> => {
 // Tools I've listed and been rented
 export const listMyRentedTools = async (): Promise<Array<PastToolListing>> => {
   const response = await client.get(`/api/tool-listings/my-rented-tools`)
+  return response.data
+}
+
+export const listReviews = async (): Promise<Array<Review>> => {
+  const response = await client.get(`/api/reviews`)
+  return response.data
+}
+
+export const createReview = async (
+  listing: number,
+  score: number,
+  description: string,
+): Promise<Review> => {
+  const response = await client.post('/api/reviews/', {
+    listing,
+    score,
+    description,
+  })
   return response.data
 }

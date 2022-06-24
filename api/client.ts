@@ -23,4 +23,14 @@ client.interceptors.request.use((config) => {
   return { ...noParamsConfig, params: decamelizeKeys(params) }
 })
 
+client.interceptors.request.use((config)=> {
+  if (!['/auth/jwt/refresh/', '/auth/jwt/verify/', '/auth/jwt/create/'].includes(config.url ?? '') && !config.headers?.Authorization) {
+     const CancelToken = axios.CancelToken;
+    return {
+      ...config,
+      cancelToken: new CancelToken((cancel) => cancel('Cancel repeated request'))
+    };
+  } else return config
+})
+
 export default client

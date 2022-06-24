@@ -8,4 +8,5 @@ export interface ToolListing {
   price: number;
   status: Status;
   phoneNumber: string;
+  description: string;
 }
