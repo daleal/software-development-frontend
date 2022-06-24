@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import { useSession } from '@/hooks/session'
 import { MoonLoader } from 'react-spinners'
+import WithNavbar from '../layouts/WithNavbar'
 
 
 const AUTH_PATHS = ['/login', '/signup']
@@ -40,5 +41,9 @@ export const RequireLoggedIn = ({ Component, pageProps }: AppProps) => {
     return <MoonLoader loading={loading} color={'#1e40af'} />
   }
 
-  return <Component {...pageProps} />
+  if (pageProps.skipNavbar) {
+    return <Component {...pageProps} />
+  }
+
+  return <WithNavbar><Component {...pageProps} /></WithNavbar>
 }
