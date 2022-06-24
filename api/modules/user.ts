@@ -9,3 +9,8 @@ export const get = async () => {
   const response = await client.get('/auth/users/me/')
   return response.data
 }
+
+export const getById = async (id: number) => {
+  const response = await client.get(`/auth/users/${id}/`)
+  return response.data
+}

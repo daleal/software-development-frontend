@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import { useSession } from '@/hooks/session'
-import {Bars} from "react-loader-spinner"
 import WithNavbar from '../layouts/WithNavbar'
+import Loading from '../Loading'
 
 
 const AUTH_PATHS = ['/login', '/signup']
@@ -38,7 +38,7 @@ export const RequireLoggedIn = ({ Component, pageProps }: AppProps) => {
   }, [Component]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) {
-    return <Bars height="100" width="100" color="blue" ariaLabel="loading-indicator" />
+    return <Loading />
   }
 
   if (pageProps.skipNavbar) {

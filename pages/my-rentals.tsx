@@ -1,53 +1,77 @@
-import { useEffect, useState } from 'react'
-import type { NextPage } from 'next'
-import { loadMyRentals } from '@/store/modules/toolListings'
-import { useSelector, useDispatch } from '@/store'
-import type { PastToolListing } from '@/types/entities/pastToolListing'
-import Image from 'next/image'
-import Link from 'next/link'
+import { useEffect, useState } from "react";
+import type { NextPage } from "next";
+import { loadMyRentals } from "@/store/modules/toolListings";
+import { useSelector, useDispatch } from "@/store";
+import type { PastToolListing } from "@/types/entities/pastToolListing";
+import Image from "next/image";
+import Link from "next/link";
+import Loading from "@/components/Loading";
 
 const MyRentals: NextPage = () => {
-    const dispatch = useDispatch()
-    const { loading } = useSelector((state) => state.toolListings)
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.toolListings);
 
-    const [toolListings, setToolListings] = useState<PastToolListing[]>([])
+  const [toolListings, setToolListings] = useState<PastToolListing[]>([]);
 
-    useEffect(() => {
-      const loadListing = async () => {
-        const listings = await dispatch(loadMyRentals()).unwrap()
-        setToolListings(listings)
-      }
-      loadListing()
-    }, [dispatch])
+  useEffect(() => {
+    const loadListing = async () => {
+      const listings = await dispatch(loadMyRentals()).unwrap();
+      setToolListings(listings);
+    };
+    loadListing();
+  }, [dispatch]);
 
-  return ( 
-    <div>
-      <div className=" m-24 bg-white shadow overflow-hidden sm:rounded-md text-center">
-        <div className="text-blue-800 font-bold text-2xl mb-2 m-10">
-          Mi Historial de Arriendos
-        </div>
-        <div className="grid grid-cols-4 gap-8 m-10">
-          { loading ? <>loading...</> : toolListings.map((tool: PastToolListing) =>
-            <Link key={tool.id} href="/tools/[id]"  as={`/tools/${tool.id}`} passHref>
-              <div  className="max-w-sm rounded overflow-hidden shadow-lg">
-                <div className='relative w-full h-44'>
-                  <Image alt={tool.name}
-                  className="rounded-t-lg"
-                  layout="fill" // required
-                  objectFit="cover"
-                  src={tool.image} />
+  if (loading) return <Loading />;
+
+  return (
+    <div className=" max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+      <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+        <h1 className="text-7xl font-extrabold tracking-tight text-blue-900">
+          Mis arriendos
+        </h1>
+        <h2 className="text-3xl font-semibold tracking-tight text-gray-500">
+          Recuerda devolver tus herramientas.
+        </h2>
+        {!toolListings.length && (
+          <h3 className="text-xl w-full text-center font-semibold text-gray-400 pt-11">
+            No has hecho ningún arriendo.
+          </h3>
+        )}
+        <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+          {toolListings.map((tool) => (
+            <div
+              key={tool.id}
+              className="group relative hover:scale-105 transition duration-150 ease-in-out"
+            >
+              <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
+                <img
+                  alt={tool.name}
+                  className="relative w-full h-full object-center object-cover lg:w-full lg:h-full"
+                  src={tool.image}
+                />
+              </div>
+              <div className="mt-4 flex justify-between">
+                <div>
+                  <h3 className="text-sm font-bold text-gray-700">
+                    <a href={`/tools/${tool.id}`}>
+                      <span aria-hidden="true" className="absolute inset-0" />
+                      {tool.name}
+                    </a>
+                  </h3>
+                  <p className={`mt-1 text-sm text-gray-500 font-semibold`}>
+                    {tool.description}
+                  </p>
                 </div>
-                <div className="p-5">
-                  <div className="font-bold text-xl text-blue-800">{ tool.name }</div>
-                  <p className="text-sm text-gray-500">Precio: ${ tool.price }</p> 
-                </div>
-              </div> 
-            </Link>
-          )}
+                <p className="text-sm font-medium text-gray-900">
+                  $ {tool.price}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MyRentals
+export default MyRentals;
