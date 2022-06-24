@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from "@/store";
 import type { ToolListing } from "@/types/entities/toolListing";
 import { Status } from "@/types/api/status";
 import Loading from "@/components/Loading";
+import Input from "@/components/Input";
+import type { ChangeEvent, Dispatch, SetStateAction } from 'react'
 
 function truncate(input: string) {
   if (input.length > 255) {
@@ -17,7 +19,9 @@ const ListTools: NextPage = () => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.toolListings);
 
+  const [search, setSearch] = useState('')
   const [toolListings, setToolListings] = useState<ToolListing[]>([]);
+  const [shownToolListings, setShownToolListings] = useState<ToolListing[]>([])
 
   useEffect(() => {
     const loadListing = async () => {
@@ -28,6 +32,24 @@ const ListTools: NextPage = () => {
     };
     loadListing();
   }, [dispatch]);
+
+  const bindFormEventData = (valueSetter: Dispatch<SetStateAction<string>>) => (
+    (event: ChangeEvent<HTMLInputElement>) => valueSetter(event.target.value)
+  )
+
+  useEffect(() => {
+    if (search.trim() === '') {
+      setShownToolListings(toolListings)
+    } else {
+      const shown = toolListings.filter(
+        (listing) => (
+          listing.name.toLowerCase().includes(search.trim().toLowerCase())
+          || listing.description.toLowerCase().includes(search.trim().toLowerCase())
+        )
+      )
+      setShownToolListings(shown)
+    }
+  }, [search, toolListings])
 
   if (loading) return <Loading />;
 
@@ -40,14 +62,22 @@ const ListTools: NextPage = () => {
         <h2 className="text-3xl font-semibold tracking-tight text-gray-500">
           Por qué comprar, cuando puedes arrendar.
         </h2>
-        {!toolListings.length && (
+        <Input
+          type="text"
+          id="search"
+          className="mt-4"
+          placeholder="Filtrar herramientas"
+          value={search}
+          onChange={bindFormEventData(setSearch)}
+        />
+        {!shownToolListings.length && (
             <h3 className="text-xl w-full text-center font-semibold text-gray-400 pt-11">
               No hay herramientas disponibles.
             </h3>
           )}
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
 
-          {toolListings.map((tool) => (
+          {shownToolListings.map((tool) => (
             <div
               key={tool.id}
               className="group relative hover:scale-105 transition duration-150 ease-in-out"
