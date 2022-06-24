@@ -15,7 +15,7 @@ import type { Nullable } from "@/types/common";
 import type { ToolListing } from "@/types/entities/toolListing";
 import Image from "next/image";
 import { Status } from "@/types/api/status";
-import Custom404 from "../404";
+import Custom404 from "../../404";
 import Loading from "@/components/Loading";
 
 const ToolListingDetail: NextPage = () => {
@@ -92,10 +92,10 @@ const ToolListingDetail: NextPage = () => {
 
   return (
     <div>
-      <div className="mx-auto max-w-6xl max-h-min my-auto border rounded-lg pt-6 pb-16 sm:pb-24">
+      <div className="max-w-6xl pt-6 pb-16 mx-auto my-auto border rounded-lg max-h-min sm:pb-24">
         <nav
           aria-label="Breadcrumb"
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+          className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8"
         >
           <ol role="list" className="flex items-center space-x-4">
             {breadcrumbs.map((breadcrumb) => (
@@ -111,7 +111,7 @@ const ToolListingDetail: NextPage = () => {
                     viewBox="0 0 6 20"
                     xmlns="http://www.w3.org/2000/svg"
                     aria-hidden="true"
-                    className="h-5 w-auto text-gray-300"
+                    className="w-auto h-5 text-gray-300"
                   >
                     <path
                       d="M4.878 4.34H3.551L.27 16.532h1.327l3.281-12.19z"
@@ -131,7 +131,7 @@ const ToolListingDetail: NextPage = () => {
             </li>
           </ol>
         </nav>
-        <div className="mt-8 max-w-2xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+        <div className="max-w-2xl px-4 mx-auto mt-8 sm:px-6 lg:max-w-7xl lg:px-8">
           <div className="lg:grid lg:grid-cols-12 lg:auto-rows-min lg:gap-x-8">
             <div className="lg:col-start-8 lg:col-span-5">
               <div className="flex justify-between">
@@ -155,7 +155,7 @@ const ToolListingDetail: NextPage = () => {
                   >
                     ·
                   </div>
-                  <div className="ml-4 flex">
+                  <div className="flex ml-4">
                     <p className="text-sm font-medium text-gray-600 hover:text-gray-500">
                       Contacto: {toolListing?.phoneNumber}
                     </p>
@@ -165,14 +165,14 @@ const ToolListingDetail: NextPage = () => {
               {isPublisher ? (
                 isRented ? (
                   <button
-                    className="mt-8 w-full bg-blue-300 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    className="flex items-center justify-center w-full px-8 py-3 mt-8 text-base font-medium text-white bg-blue-300 border border-transparent rounded-md hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     onClick={unrentTool}
                   >
                     Terminar arriendo
                   </button>
                 ) : (
                   <button
-                    className="mt-8 w-full bg-red-300 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                    className="flex items-center justify-center w-full px-8 py-3 mt-8 text-base font-medium text-white bg-red-300 border border-transparent rounded-md hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                     onClick={deleteTool}
                   >
                     Eliminar herramienta
@@ -180,7 +180,7 @@ const ToolListingDetail: NextPage = () => {
                 )
               ) : !isRented ? (
                 <button
-                  className="mt-8 w-full bg-yellow-300 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+                  className="flex items-center justify-center w-full px-8 py-3 mt-8 text-base font-medium text-white bg-yellow-300 border border-transparent rounded-md hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
                   onClick={rentTool}
                 >
                   Arrendar
@@ -199,7 +199,7 @@ const ToolListingDetail: NextPage = () => {
                   key={toolListing?.id}
                   src={toolListing?.image}
                   alt={toolListing?.name}
-                  className="lg:col-span-2 lg:row-span-2 rounded-lg"
+                  className="rounded-lg lg:col-span-2 lg:row-span-2"
                 />
               </div>
             </div>
@@ -211,10 +211,18 @@ const ToolListingDetail: NextPage = () => {
                   Descripción
                 </h2>
 
-                <div className="mt-4 prose prose-sm text-gray-500">
+                <div className="mt-4 prose-sm prose text-gray-500">
                   {toolListing?.description}
                 </div>
               </div>
+            </div>
+            <div className="mt-8 lg:col-span-5">
+              <a
+                href={`/tools/${toolListing?.id}/reviews`}
+                className="flex items-center justify-center w-full px-8 py-3 mt-8 text-base font-medium text-white bg-yellow-300 border border-transparent rounded-md hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+              >
+                Reseñas
+              </a>
             </div>
           </div>
         </div>

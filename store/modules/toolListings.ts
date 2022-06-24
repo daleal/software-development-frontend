@@ -1,16 +1,44 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as api from "@/api";
 import type { ToolListing } from "@/types/entities/toolListing";
+import { Review } from "@/types/entities/review";
 
 export interface ToolListingsState {
   loading: boolean;
   listings: Array<ToolListing>;
+  reviews: Array<Review>;
 }
 
 const initialState: ToolListingsState = {
   loading: false,
   listings: [],
+  reviews: [],
 };
+
+export const loadReviews = createAsyncThunk(
+  'reviews',
+  async () => {
+    const reviews = await api.toolListings.listReviews()
+    return reviews
+  }
+)
+
+export const createReview = createAsyncThunk(
+  'reviews/create',
+  async (config: {
+    score: number;
+    listing: number
+    description: string;
+  }) => {
+    const review = await api.toolListings.createReview(
+      config.listing,
+      config.score,
+      config.description
+    )
+    return review
+  }
+)
+
 
 export const loadMyToolListings = createAsyncThunk(
   'toolListings/loadMine',
@@ -167,6 +195,21 @@ export const toolListingsSlice = createSlice({
       state.loading = true
     })
     builder.addCase(loadMyRentedTools.fulfilled, (state) => {
+      state.loading = false
+    })
+    // reviews
+    builder.addCase(loadReviews.pending, (state) => {
+      state.loading = true
+    })
+    builder.addCase(loadReviews.fulfilled, (state, action) => {
+      state.loading = false
+      state.reviews = [...action.payload]
+    })
+    // create
+    builder.addCase(createReview.pending, (state) => {
+      state.loading = true
+    })
+    builder.addCase(createReview.fulfilled, (state) => {
       state.loading = false
     })
   },
