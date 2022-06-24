@@ -39,7 +39,7 @@ const MyRentedTools: NextPage = () => {
         </h2>
         {!toolListings.length && (
           <h3 className="text-xl w-full text-center font-semibold text-gray-400 pt-11">
-            No tienes ningún arriendo en proceso.
+            No tienes ningún arriendo en proceso o terminado.
           </h3>
         )}
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
@@ -58,7 +58,7 @@ const MyRentedTools: NextPage = () => {
               <div className="mt-4 flex justify-between">
                 <div>
                   <h3 className="text-sm font-bold text-gray-700">
-                    <a href={`/tools/${tool.id}`}>
+                    <a href={`/tools/${tool.listing}`}>
                       <span aria-hidden="true" className="absolute inset-0" />
                       {tool.name}
                     </a>
