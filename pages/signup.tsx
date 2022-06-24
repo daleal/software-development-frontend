@@ -56,8 +56,8 @@ const Signup: NextPage = () => {
   }
 
   return <>
-    <div className="mt-8 w-full text-center text-4xl font-semibold">Crear cuenta</div>
     <UserForm
+      formTitle='Crea una cuenta en Rentool'
       usernameError={usernameError}
       phoneNumberError={phoneNumberError}
       passwordError={passwordError}
@@ -65,6 +65,7 @@ const Signup: NextPage = () => {
       loading={loading}
       onSubmit={signUp}
       onBlur={onBlur}
+      buttonText='Registrarme'
     />
   </>
 }

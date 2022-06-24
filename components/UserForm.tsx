@@ -1,204 +1,131 @@
-import { useEffect, useState } from 'react'
-import type { ChangeEvent, Dispatch, FormEvent, SetStateAction } from 'react'
+import { useState } from "react";
+import type { FormEvent } from "react";
+import Input from "./Input";
+import Link from "next/link";
 
 interface Props {
-  usernameError?: string
-  phoneNumberError?: string
-  passwordError?: string
-  loginError?: string
-  showPhoneNumber?: boolean
-  loading: boolean
-  onSubmit: (username: string, password: string, phoneNumber?: string) => void
-  onBlur?: (field: 'username' | 'phone-number' | 'password') => void
+  formTitle: string;
+  buttonText: string;
+  usernameError?: string;
+  phoneNumberError?: string;
+  passwordError?: string;
+  loginError?: string;
+  showPhoneNumber?: boolean;
+  showRegisterLink?: boolean;
+  loading: boolean;
+  onSubmit: (username: string, password: string, phoneNumber?: string) => void;
+  onBlur?: (field: "username" | "phone-number" | "password") => void;
 }
 
 const UserForm = (props: Props) => {
-  const [username, setUsername] = useState('')
-  const [phoneNumber, setPhoneNumber] = useState('')
-  const [password, setPassword] = useState('')
-
-  const [usernameClasses, setUsernameClasses] = useState('')
-  const [phoneNumberClasses, setPhoneNumberClasses] = useState('')
-  const [passwordClasses, setPasswordClasses] = useState('')
-
-  useEffect(() => {
-    if (!!props.usernameError) {
-      setUsernameClasses(`
-        text-red-900 bg-red-50 border-red-500 placeholder-red-700
-        focus:ring-red-500 focus:border-red-500
-      `)
-    } else {
-      setUsernameClasses(`
-        text-gray-900 bg-white border-slate-300 placeholder-slate-400
-        focus:ring-blue-500 focus:border-blue-500
-      `)
-    }
-  }, [props.usernameError])
-
-  useEffect(() => {
-    if (!!props.phoneNumberError) {
-      setPhoneNumberClasses(`
-        text-red-900 bg-red-50 border-red-500 placeholder-red-700
-        focus:ring-red-500 focus:border-red-500
-      `)
-    } else {
-      setPhoneNumberClasses(`
-        text-gray-900 bg-white border-slate-300 placeholder-slate-400
-        focus:ring-blue-500 focus:border-blue-500
-      `)
-    }
-  }, [props.phoneNumberError])
-
-  useEffect(() => {
-    if (!!props.passwordError) {
-      setPasswordClasses(`
-        text-red-900 bg-red-50 border-red-500 placeholder-red-700
-        focus:ring-red-500 focus:border-red-500
-      `)
-    } else {
-      setPasswordClasses(`
-        text-gray-900 bg-white border-slate-300 placeholder-slate-400
-        focus:ring-blue-500 focus:border-blue-500
-      `)
-    }
-  }, [props.passwordError])
-
-  useEffect(() => {
-    if (!!props.loginError) {
-      setUsernameClasses(`
-        text-red-900 bg-red-50 border-red-500 placeholder-red-700
-        focus:ring-red-500 focus:border-red-500
-      `)
-      setPasswordClasses(`
-        text-red-900 bg-red-50 border-red-500 placeholder-red-700
-        focus:ring-red-500 focus:border-red-500
-      `)
-    } else {
-      setUsernameClasses(`
-        text-gray-900 bg-white border-slate-300 placeholder-slate-400
-        focus:ring-blue-500 focus:border-blue-500
-      `)
-      setPasswordClasses(`
-        text-gray-900 bg-white border-slate-300 placeholder-slate-400
-        focus:ring-blue-500 focus:border-blue-500
-      `)
-    }
-  }, [props.loginError])
-
-  const bindFormEventData = (valueSetter: Dispatch<SetStateAction<string>>) => (
-    (event: ChangeEvent<HTMLInputElement>) => valueSetter(event.target.value)
-  )
+  const [username, setUsername] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+    event.preventDefault();
     if (!props.loading) {
-      props.onSubmit(username, password, phoneNumber)
+      props.onSubmit(username, password, phoneNumber);
     }
-  }
+  };
 
   return (
-    <div className="p-4">
-      <form onSubmit={submit}>
-        <div className="mb-6">
-          <label
-            htmlFor="username"
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
-            Nombre de usuario
-          </label>
-          <input
-            id="username"
-            className={`
-              block w-full px-3 py-2 border rounded-md text-sm shadow-sm focus:outline-none
-              focus:ring-1 h-12 ${usernameClasses}
-            `}
-            placeholder="username"
-            disabled={props.loading}
-            value={username}
-            onChange={bindFormEventData(setUsername)}
-            onBlur={() => props.onBlur?.('username')}
-            required
-          />
-          { !!props.usernameError &&
-            <p className="mt-1 text-sm text-red-900">
-              { props.usernameError }
+    <>
+      <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-md">
+          <Link href="/">
+            <a>
+              <img
+                className="mx-auto h-24 w-auto"
+                src="/rentool-logo.svg"
+                alt="Workflow"
+              />
+            </a>
+          </Link>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            {props.formTitle}
+          </h2>
+          {props.showRegisterLink && (
+            <p className="mt-2 text-center text-sm text-gray-600">
+              O bien{" "}
+              <Link href="/signup">
+                <a className="font-medium text-blue-600 hover:text-blue-800">
+                  crea una nueva cuenta aquí
+                </a>
+              </Link>
             </p>
-          }
+          )}
         </div>
-        { !!props.showPhoneNumber &&
-          <div className="mb-6">
-            <label
-              htmlFor="phone-number"
-              className="block mb-2 text-sm font-medium text-gray-900"
-            >
-              Numero de teléfono
-            </label>
-            <input
-              id="phone-number"
-              className={`
-                block w-full px-3 py-2 border rounded-md text-sm shadow-sm focus:outline-none
-                focus:ring-1 h-12 ${phoneNumberClasses}
-              `}
-              placeholder="+569..."
-              disabled={props.loading}
-              value={phoneNumber}
-              onChange={bindFormEventData(setPhoneNumber)}
-              onBlur={() => props.onBlur?.('phone-number')}
-              required
-            />
-            { !!props.phoneNumberError &&
-              <p className="mt-1 text-sm text-red-900">
-                { props.phoneNumberError }
-              </p>
-            }
-          </div>
-        }
-        <div className="mb-6">
-          <label
-            htmlFor="password"
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
-            Contraseña
-          </label>
-          <input
-            type="password"
-            id="password"
-            className={`
-              block w-full px-3 py-2 border rounded-md text-sm shadow-sm focus:outline-none
-              focus:ring-1 h-12 ${passwordClasses}
-            `}
-            placeholder="password..."
-            disabled={props.loading}
-            value={password}
-            onChange={bindFormEventData(setPassword)}
-            onBlur={() => props.onBlur?.('password')}
-            required
-          />
-          { !!props.passwordError &&
-            <p className="mt-1 text-sm text-red-900">
-              { props.passwordError }
-            </p>
-          }
-        </div>
-          { !!props.loginError &&
-            <p className="mb-5 text-sm text-red-900">
-              { props.loginError }
-            </p>
-          }
-        <button
-          type="submit"
-          className="
-            text-white bg-blue-700 hover:bg-blue-800 focus:ring-4
-            focus:outline-none focus:ring-blue-300 font-medium rounded-lg
-            text-sm w-full sm:w-auto px-5 py-2.5 text-center
-          "
-          disabled={props.loading}
-        >
-          Enviar
-        </button>
-      </form>
-    </div>
-  )
-}
 
-export default UserForm
+        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+          <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+            <form className="space-y-6" onSubmit={submit}>
+              <Input
+                id="username"
+                name="username"
+                label="Nombre de usuario"
+                type="username"
+                autoComplete="username"
+                placeholder="Nombre de usuario"
+                required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                onBlur={() => props.onBlur?.("username")}
+                error={props.usernameError}
+              />
+
+              {props.showPhoneNumber && (
+                <Input
+                  label="Número de teléfono"
+                  id="phone-number"
+                  name="phone-number"
+                  type="tel"
+                  autoComplete="tel"
+                  placeholder="+569 12345678"
+                  required
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  onBlur={() => props.onBlur?.("phone-number")}
+                  error={props.phoneNumberError}
+                />
+              )}
+
+              <Input
+                label="Contraseña"
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                placeholder="contraseña "
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                onBlur={() => props.onBlur?.("password")}
+                error={props.passwordError}
+              />
+
+              <div>
+                {props.loginError && (
+                  <p className="mt-2 text-sm text-red-600">
+                    {props.loginError}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <button
+                  type="submit"
+                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-800"
+                >
+                  {props.buttonText}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default UserForm;

@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import { useSession } from '@/hooks/session'
+import WithNavbar from '../layouts/WithNavbar'
+import Loading from '../Loading'
+
 
 const AUTH_PATHS = ['/login', '/signup']
 const OPEN_PATHS = ['/']
@@ -35,8 +38,12 @@ export const RequireLoggedIn = ({ Component, pageProps }: AppProps) => {
   }, [Component]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) {
-    return <div>Loading...</div>
+    return <Loading />
   }
 
-  return <Component {...pageProps} />
+  if (pageProps.skipNavbar) {
+    return <Component {...pageProps} />
+  }
+
+  return <WithNavbar><Component {...pageProps} /></WithNavbar>
 }

@@ -36,14 +36,22 @@ const Login: NextPage = () => {
   }
 
   return <>
-    <div className="mt-8 w-full text-center text-4xl font-semibold">Iniciar sesión</div>
     <UserForm
+      formTitle='Inicia sesión en Rentool'
+      showRegisterLink
       loading={loggingIn}
       onSubmit={loginMethod}
       loginError={loginError}
       onBlur={onBlur}
+      buttonText='Iniciar sesión'
     />
   </>
 }
 
 export default Login
+
+export function getServerSideProps() {
+  return {
+    props: { skipNavbar: true }
+  };
+}
