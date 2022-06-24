@@ -27,7 +27,7 @@ export default function Navbar() {
           </div>
         </div>
         <div className="hidden lg:block lg:ml-10 lg:pr-4 lg:space-x-8">
-          { !loggedIn && <>
+          {!loggedIn && <>
             <Link href="/login">
               <a className="font-medium text-blue-800 hover:text-blue-800">
                 Iniciar sesión
@@ -38,8 +38,8 @@ export default function Navbar() {
                 Crear cuenta
               </a>
             </Link>
-          </> }
-          { loggedIn && <>
+          </>}
+          {loggedIn && <>
             <Link href="/new-listing">
               <a className="font-medium text-blue-800 hover:text-blue-800">
                 Publicar una herramienta
@@ -55,13 +55,23 @@ export default function Navbar() {
                 Mis herramientas
               </a>
             </Link>
+            <Link href="/my-rentals">
+              <a className="font-medium text-blue-800 hover:text-blue-800">
+                Mis arriendos
+              </a>
+            </Link>
+            <Link href="/my-rented-tools">
+              <a className="font-medium text-blue-800 hover:text-blue-800">
+                Herramientas arrendadas
+              </a>
+            </Link>
             <a
-              className="cursor-pointer font-medium text-blue-800 hover:text-blue-800"
+              className="font-medium text-blue-800 cursor-pointer hover:text-blue-800"
               onClick={logout}
             >
               Cerrar Sesión
             </a>
-          </> }
+          </>}
         </div>
       </nav>
     </div>
