@@ -96,21 +96,21 @@ const ToolListingDetail: NextPage = () => {
         </nav>
         <div className="max-w-2xl px-4 mx-auto mt-8 sm:px-6 lg:max-w-7xl lg:px-8">
           <div className="lg:grid lg:grid-cols-12 lg:auto-rows-min lg:gap-x-8">
-            <div className="mt-8 lg:col-span-5">
+            <div className="lg:col-span-12">
+              {reviews.map(review => (
+                <div className="px-4 py-4 my-4 space-y-2 shadow bg-gray-50 sm:rounded-lg sm:px-10" key={review.id}>
+                  <p><span className="font-bold">Puntaje</span>: {review.score}</p>
+                  <p><span className="font-bold">Descripción</span>: {review.description}</p>
+                </div>
+              ))}
+            </div>
+            <div className="lg:col-span-5">
               <a
                 href={`/tools/${toolListing?.id}/reviews/create`}
                 className="flex items-center justify-center w-full px-8 py-3 mt-8 text-base font-medium text-white bg-yellow-300 border border-transparent rounded-md hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
               >
                 Crear Reseña
               </a>
-            </div>
-            <div className="mt-8 lg:col-span-5">
-              {reviews.map(review => (
-                <div key={review.id}>
-                  <p>Puntaje: {review.score}</p>
-                  <p> Descripción: {review.description}</p>
-                </div>
-              ))}
             </div>
           </div>
         </div>
