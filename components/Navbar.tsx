@@ -61,6 +61,16 @@ export default function Navbar() {
                   Mis herramientas
                 </a>
               </Link>
+              <Link href="/my-rentals">
+                <a className="font-medium text-blue-800 hover:text-blue-800">
+                  Mis arriendos
+                </a>
+              </Link>
+              <Link href="/my-rented-tools">
+                <a className="font-medium text-blue-800 hover:text-blue-800">
+                  Herramientas arrendadas
+                </a>
+              </Link>
               <a
                 className="cursor-pointer font-medium text-blue-800 hover:text-blue-800"
                 onClick={logout}
