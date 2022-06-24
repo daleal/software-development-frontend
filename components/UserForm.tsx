@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
-import Input from "./inputs/Input";
+import Input from "./Input";
 import Link from "next/link";
 
 interface Props {
