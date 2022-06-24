@@ -3,9 +3,14 @@ import type { NextPage } from "next";
 import { loadMyRentals } from "@/store/modules/toolListings";
 import { useSelector, useDispatch } from "@/store";
 import type { PastToolListing } from "@/types/entities/pastToolListing";
-import Image from "next/image";
-import Link from "next/link";
 import Loading from "@/components/Loading";
+
+function truncate(input: string) {
+  if (input.length > 255) {
+    return input.substring(0, 255) + "...";
+  }
+  return input;
+}
 
 const MyRentals: NextPage = () => {
   const dispatch = useDispatch();
@@ -59,7 +64,7 @@ const MyRentals: NextPage = () => {
                     </a>
                   </h3>
                   <p className={`mt-1 text-sm text-gray-500 font-semibold`}>
-                    {tool.description}
+                    {truncate(tool.description)}
                   </p>
                 </div>
                 <p className="text-sm font-medium text-gray-900">

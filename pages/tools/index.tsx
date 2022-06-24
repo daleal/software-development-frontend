@@ -3,11 +3,15 @@ import type { NextPage } from "next";
 import { loadToolListings } from "@/store/modules/toolListings";
 import { useSelector, useDispatch } from "@/store";
 import type { ToolListing } from "@/types/entities/toolListing";
-import Image from "next/image";
-import Link from "next/link";
 import { Status } from "@/types/api/status";
-import { BarLoader } from "react-spinners";
 import Loading from "@/components/Loading";
+
+function truncate(input: string) {
+  if (input.length > 255) {
+    return input.substring(0, 255) + "...";
+  }
+  return input;
+}
 
 const ListTools: NextPage = () => {
   const dispatch = useDispatch();
@@ -64,7 +68,7 @@ const ListTools: NextPage = () => {
                     </a>
                   </h3>
                   <p className={`mt-1 text-sm text-gray-500 font-semibold`}>
-                    {tool.description}
+                    {truncate(tool.description)}
                   </p>
                 </div>
                 <p className="text-sm font-medium text-gray-900">
