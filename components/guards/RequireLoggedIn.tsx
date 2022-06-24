@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import { useSession } from '@/hooks/session'
-import { MoonLoader } from 'react-spinners'
+import {Bars} from "react-loader-spinner"
 import WithNavbar from '../layouts/WithNavbar'
 
 
@@ -38,7 +38,7 @@ export const RequireLoggedIn = ({ Component, pageProps }: AppProps) => {
   }, [Component]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) {
-    return <MoonLoader loading={loading} color={'#1e40af'} />
+    return <Bars height="100" width="100" color="blue" ariaLabel="loading-indicator" />
   }
 
   if (pageProps.skipNavbar) {

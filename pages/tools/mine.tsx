@@ -3,10 +3,8 @@ import type { NextPage } from "next";
 import { loadMyToolListings } from "@/store/modules/toolListings";
 import { useSelector, useDispatch } from "@/store";
 import type { ToolListing } from "@/types/entities/toolListing";
-import Image from "next/image";
-import Link from "next/link";
 import { Status } from "@/types/api/status";
-import { BarLoader } from "react-spinners";
+import Loading from "@/components/Loading";
 
 const MyTools: NextPage = () => {
   const dispatch = useDispatch();
@@ -44,10 +42,13 @@ const MyTools: NextPage = () => {
     }
   };
 
+
+  if (loading) return <Loading />
+
   return (
     <div className=" max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
       <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-        <h1 className="text-7xl font-extrabold tracking-tight text-gray-900">
+        <h1 className="text-7xl font-extrabold tracking-tight text-blue-900">
           Mis herramientas
         </h1>
         <h1 className="text-3xl font-semibold tracking-tight text-gray-500">
