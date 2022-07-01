@@ -24,13 +24,13 @@ client.interceptors.request.use((config) => {
 })
 
 client.interceptors.request.use((config)=> {
-  if (!['/auth/jwt/refresh/', '/auth/jwt/verify/', '/auth/jwt/create/'].includes(config.url ?? '') && !config.headers?.Authorization) {
-     const CancelToken = axios.CancelToken;
+  if (!['/auth/jwt/refresh/', '/auth/jwt/verify/', '/auth/jwt/create/', '/auth/users/'].includes(config.url ?? '') && !config.headers?.Authorization) {
     return {
       ...config,
-      cancelToken: new CancelToken((cancel) => cancel('Cancel repeated request'))
+      cancelToken: new axios.CancelToken((cancel) => cancel('Cancel repeated request'))
     };
-  } else return config
+  }
+  return config
 })
 
 export default client
